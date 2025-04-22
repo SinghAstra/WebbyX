@@ -1,5 +1,4 @@
 @import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap");
-@import "devicon/devicon.min.css";
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -100,59 +99,59 @@ input:-webkit-autofill:not(:focus) {
   background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64' width='64' height='64' fill='none' stroke='rgb(255 255 255 / 0.02)'%3e%3cpath d='M0 .5H63.5V64'/%3e%3c/svg%3e");
 }
 
-/* Prism Syntax Highlight */
+/* Custom animations for loading state */
+@layer utilities {
+  .animate-fade-in {
+    animation: fadeIn 0.6s ease-in-out;
+  }
 
-.keyword {
-  color: #f97583; /* GitHub Light Red */
+  .animate-width-grow {
+    animation: widthGrow 1.5s ease-in-out infinite;
+  }
+
+  .animate-loading-dot {
+    animation: loadingDot 1.4s infinite;
+  }
+
+  .animation-delay-200 {
+    animation-delay: 0.2s;
+  }
+
+  .animation-delay-400 {
+    animation-delay: 0.4s;
+  }
 }
 
-.function {
-  color: #d2a8ff; /* GitHub Light Purple */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
-.punctuation {
-  color: #c9d1d9; /* GitHub Light Gray */
+@keyframes widthGrow {
+  0% {
+    width: 0;
+    opacity: 0.7;
+  }
+  50% {
+    width: 100%;
+    opacity: 1;
+  }
+  100% {
+    width: 0;
+    opacity: 0.7;
+  }
 }
 
-.comment {
-  color: #8b949e; /* GitHub Muted Gray */
-}
-
-.string,
-.constant,
-.annotation,
-.boolean,
-.number {
-  color: #79c0ff; /* GitHub Light Blue */
-}
-
-.tag {
-  color: #a5d6ff; /* GitHub Cyan */
-}
-
-.attr-name {
-  color: #d2a8ff; /* GitHub Light Purple */
-}
-
-.attr-value {
-  color: #ffa657; /* GitHub Light Orange */
-}
-
-pre > code {
-  display: grid;
-  max-width: inherit !important;
-  padding: 10px 14px !important;
-}
-
-.rehype-code-title {
-  margin-top: 1rem;
-  margin-bottom: -1rem;
-  border: 1px solid hsl(var(--border));
-  letter-spacing: 0.05em;
-  display: flex;
-  gap: 4px;
-  align-items: center;
-  padding: 7px 14px;
-  border-radius: 4px;
-  background-color: hsl(var(--muted) / 0.2);
+@keyframes loadingDot {
+  0%,
+  100% {
+    opacity: 0.2;
+  }
+  50% {
+    opacity: 1;
+  }
 }
