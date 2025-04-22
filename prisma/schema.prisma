@@ -78,10 +78,9 @@ model Tweet {
   id          String @id @default(cuid())
   videoId     String
   type        TweetType
-  content     String? // for single-tweet types
-  thread      Json? // only used if type == THREAD
-  createdAt   DateTime @default(now())
+  content     String
 
+  createdAt   DateTime @default(now())
   video Video @relation(fields: [videoId], references: [id])
 }
 

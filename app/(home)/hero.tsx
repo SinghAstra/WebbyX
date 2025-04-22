@@ -1,13 +1,12 @@
 "use client";
 
-import AnimationContainer from "@/components/global/animation-container";
+import FadeIn from "@/components/global/fade-in";
+import FadeSlideIn from "@/components/global/fade-slide-in";
 import MaxWidthWrapper from "@/components/global/max-width-wrapper";
 import { BackgroundShine } from "@/components/ui/background-shine";
 import { BorderBeam } from "@/components/ui/border-beam";
 import GradientButton from "@/components/ui/gradient-button";
 import { LampContainer } from "@/components/ui/lamp";
-import { ProcessCard, ProcessGrid, Steps } from "@/components/ui/process-grid";
-import MagicBadge from "@/components/ui/rotating-border-badge";
 import { siteConfig } from "@/config/site";
 import { ArrowRightIcon } from "lucide-react";
 import { motion } from "motion/react";
@@ -20,8 +19,6 @@ interface HeroSectionProps {
 }
 
 const HeroSection = ({ isAuthenticated }: HeroSectionProps) => {
-  const href = isAuthenticated ? "/dashboard" : "/auth/sign-in";
-
   const handleGetStarted = () => {
     if (!isAuthenticated) {
       redirect("/auth/sign-in");
@@ -37,24 +34,24 @@ const HeroSection = ({ isAuthenticated }: HeroSectionProps) => {
       {/* Hero Section */}
       <MaxWidthWrapper>
         <div className="flex flex-col items-center justify-center w-full ">
-          <AnimationContainer
+          <FadeIn
             className="flex flex-col items-center justify-center w-full text-center"
-            delay={0.2}
+            delay={0.1}
           >
             <GradientButton onClick={handleGetStarted}>
-              ✨ Start Analyzing Repository
+              ✨ Start Generating Tweets
             </GradientButton>
 
             <h1 className="text-foreground text-center py-6 text-5xl font-medium text-balance sm:text-6xl md:text-7xl lg:text-8xl  w-full">
-              Understand <br />
+              Turn YouTube Videos Into <br />
               <span className="text-transparent bg-gradient-to-r from-violet-500 to-fuchsia-500 bg-clip-text inline-bloc">
-                Repository
+                Viral Tweets
               </span>
             </h1>
 
             <p className="mb-4 text-lg tracking-tight text-muted-foreground md:text-xl text-balance">
-              Give me public github repository url &
-              <br />I will explain the codebase.
+              Paste a YouTube link and select your tweet style <br />
+              Hook, Thread, Insight, Stat, or Quote. We’ll do the rest.
             </p>
             <div className="flex items-center justify-center gap-4 z-50">
               <BackgroundShine className="rounded-md">
@@ -79,9 +76,9 @@ const HeroSection = ({ isAuthenticated }: HeroSectionProps) => {
                 </a>
               </GradientButton>
             </div>
-          </AnimationContainer>
+          </FadeIn>
 
-          <AnimationContainer
+          <FadeSlideIn
             delay={0.5}
             className="relative pt-20 pb-20 md:py-32 px-2 bg-transparent w-full"
           >
@@ -99,24 +96,8 @@ const HeroSection = ({ isAuthenticated }: HeroSectionProps) => {
               <div className="absolute -bottom-4 inset-x-0 w-full h-1/2 bg-gradient-to-t from-background z-40"></div>
               <div className="absolute bottom-0 md:-bottom-8 inset-x-0 w-full h-1/4 bg-gradient-to-t from-background z-50"></div>
             </div>
-          </AnimationContainer>
+          </FadeSlideIn>
         </div>
-      </MaxWidthWrapper>
-
-      {/* Features Section */}
-      <MaxWidthWrapper className="pt-10">
-        <AnimationContainer delay={0.1}>
-          <div className="flex flex-col w-full items-center lg:items-center justify-center py-8">
-            <MagicBadge title="Process" />
-          </div>
-        </AnimationContainer>
-        <AnimationContainer delay={0.2}>
-          <ProcessGrid className="py-8 ">
-            {Steps(href).map((step, idx) => (
-              <ProcessCard key={idx} {...step} />
-            ))}
-          </ProcessGrid>
-        </AnimationContainer>
       </MaxWidthWrapper>
 
       {/* CTA Section */}
@@ -128,17 +109,22 @@ const HeroSection = ({ isAuthenticated }: HeroSectionProps) => {
             transition={{ delay: 0.3, duration: 0.8, ease: "easeInOut" }}
             className="flex flex-col items-center justify-center gap-8  "
           >
-            <h1 className="mt-8  text-foreground py-4  text-center text-4xl font-medium tracking-tight md:text-7xl">
-              Understand <br />
-              Repository
+            <h1 className="mt-8 text-foreground py-4 text-center text-4xl font-medium tracking-tight md:text-7xl">
+              Ready to <br />
+              <span className="text-transparent bg-gradient-to-r from-yellow-500 to-pink-500 bg-clip-text">
+                Make Your Tweets Go Viral ?
+              </span>
             </h1>
             <BackgroundShine>
               <Link
                 href={isAuthenticated ? "/dashboard" : "/auth/sign-in"}
-                className="flex items-center "
+                className="flex items-center group"
               >
-                Get started for free
-                <ArrowRightIcon className="w-4 h-4 ml-2" />
+                Generate from YouTube Now
+                <ArrowRightIcon
+                  className="ml-1 size-4 transition-transform duration-300 
+                           ease-in-out group-hover:translate-x-1"
+                />
               </Link>
             </BackgroundShine>
           </motion.div>
