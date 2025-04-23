@@ -14,14 +14,14 @@ const EmptyLeftSidebar = () => {
       </Link>
       <h3 className="font-medium mb-2">No videos yet</h3>
       <p className="text-sm text-muted-foreground text-center mb-4">
-        Generate your first blog to get started with {siteConfig.name}
+        Generate viral tweets & get started with {siteConfig.name}
       </p>
       <Link
         className={cn(buttonVariants({ variant: "outline" }))}
         href="/dashboard?action=convert"
       >
         <Plus className="h-4 w-4 mr-2" />
-        Generate Blogs
+        Generate Viral Tweets
       </Link>
     </div>
   );
