@@ -110,9 +110,13 @@ const HeroSection = ({ isAuthenticated }: HeroSectionProps) => {
             className="flex flex-col items-center justify-center gap-8  "
           >
             <h1 className="mt-8 text-foreground py-4 text-center text-4xl font-medium tracking-tight md:text-7xl">
-              Ready to <br />
+              Start Generating <br />
               <span className="text-transparent bg-gradient-to-r from-yellow-500 to-pink-500 bg-clip-text">
-                Make Your Tweets Go Viral ?
+                Viral Tweets
+              </span>{" "}
+              With <br />
+              <span className="text-transparent bg-gradient-to-r from-yellow-500 to-pink-500 bg-clip-text">
+                {siteConfig.name}
               </span>
             </h1>
             <BackgroundShine>
@@ -120,7 +124,7 @@ const HeroSection = ({ isAuthenticated }: HeroSectionProps) => {
                 href={isAuthenticated ? "/dashboard" : "/auth/sign-in"}
                 className="flex items-center group"
               >
-                Generate from YouTube Now
+                Get started for free
                 <ArrowRightIcon
                   className="ml-1 size-4 transition-transform duration-300 
                            ease-in-out group-hover:translate-x-1"

@@ -5,7 +5,7 @@ import { authOptions } from "@/lib/auth-options";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 import { ReactNode } from "react";
-import { fetchVideos } from "./action";
+import { activateBackendServer, fetchVideos } from "./action";
 
 interface DashboardLayoutProps {
   children: ReactNode;
@@ -31,6 +31,8 @@ async function DashboardLayout({ children }: DashboardLayoutProps) {
   }
 
   const { videos } = await fetchVideos();
+
+  await activateBackendServer();
 
   return (
     <div className="min-h-screen bg-background">
