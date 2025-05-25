@@ -1,296 +1,318 @@
 "use client";
 
-import { addUserVideo, useVideo } from "@/components/context/video";
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-} from "@/components/ui/alert-dialog";
+import { useToastContext } from "@/components/provider/toast";
 import { Button } from "@/components/ui/button";
-import { cn, parseYoutubeUrl } from "@/lib/utils";
-import { motion } from "framer-motion";
-import { AlertCircle, SearchIcon, SparklesIcon } from "lucide-react";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { FormEvent, useCallback, useEffect, useRef, useState } from "react";
-import { FaSpinner } from "react-icons/fa";
-import { toast } from "sonner";
-import { fetchProcessingVideos, stopVideoProcessing } from "./action";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { VideoInfo } from "@/interfaces/video";
+import { fetchAllUserVideos } from "@/lib/api";
+import { parseYoutubeUrl } from "@/lib/utils";
+import { Loader2 } from "lucide-react";
+import Link from "next/link";
+import { useState } from "react";
+import { mutate } from "swr";
+import { getVideoInfo } from "./action";
+import { VideoPreview } from "./video-preview";
 
-function CommandPaletteRepoForm() {
-  const [url, setUrl] = useState<string>("");
-  const [message, setMessage] = useState<string | null>(null);
-  const [isProcessing, setIsProcessing] = useState(false);
-  const [showGuide, setShowGuide] = useState(false);
-  const searchParams = useSearchParams();
-  const pathName = usePathname();
-  const formRef = useRef<HTMLDivElement>(null);
-  const actionQuery = searchParams.get("action");
-  const router = useRouter();
-  const [showAlert, setShowAlert] = useState(false);
-  const { dispatch } = useVideo();
+function DashboardPage() {
+  const [videoUrl, setVideoUrl] = useState("");
+  const [videoId, setVideoId] = useState("");
+  const [step, setStep] = useState(1);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [videoDetails, setVideoDetails] = useState<VideoInfo | null>(null);
+  const [scriptContent, setScriptContent] = useState("");
+  const [isSubmittingUrl, setIsSubmittingUrl] = useState(false);
+  const [isSubmittingScript, setIsSubmittingScript] = useState(false);
 
-  useEffect(() => {
-    if (actionQuery === "convert") {
-      setShowGuide(true);
+  const { setToastMessage } = useToastContext();
+
+  const extractVideoId = (url: string) => {
+    const match = url.match(
+      /(?:youtube\.com\/.*v=|youtu\.be\/)([a-zA-Z0-9_-]{11})/
+    );
+
+    if (!match || !match[1]) {
+      throw new Error("Invalid Youtube URL");
     }
-  }, [actionQuery]);
-
-  const handleSubmit = async (e: FormEvent) => {
-    e.preventDefault();
-    setIsProcessing(true);
-    const validation = parseYoutubeUrl(url);
-
-    if (!validation.isValid) {
-      setMessage(validation.message ? validation.message : null);
-      return;
-    }
-
-    const pendingVideos = await fetchProcessingVideos();
-
-    if (pendingVideos.length > 0) {
-      setIsProcessing(false);
-      setShowAlert(true);
-      return;
-    }
-
-    processVideos();
+    return match[1];
   };
 
-  const processVideos = async () => {
-    setIsProcessing(true);
+  const handleUrlSubmit = async () => {
+    const { isValid, message } = parseYoutubeUrl(videoUrl);
+
+    if (!isValid) {
+      setToastMessage(message ?? "Invalid Youtube URL");
+      return;
+    }
+    setIsSubmittingUrl(true);
+    const id = extractVideoId(videoUrl);
+    if (!id) {
+      setToastMessage("Please enter a valid YouTube video URL");
+      return;
+    }
+
+    setVideoId(id);
+    await fetchVideoDetails(id);
+    setStep(2);
+    setIsSubmittingUrl(false);
+  };
+
+  const fetchVideoDetails = async (id: string) => {
     try {
-      const response = await fetch("/api/video/start-process", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ videoUrl: url }),
-      });
+      const response = await getVideoInfo(id);
 
-      const data = await response.json();
-      if (!response.ok) {
-        setMessage(data.message || "Failed to process video");
+      if (!response) {
+        throw new Error("Check Your Internet Connection");
       }
-
-      dispatch(addUserVideo(data.video));
-
-      setUrl("");
-      dismissGuide();
-      setMessage("Video Processing Started");
+      setVideoDetails(response);
     } catch (error) {
       if (error instanceof Error) {
         console.log("error.stack is ", error.stack);
         console.log("error.message is ", error.message);
       }
-      setMessage("Check Your Network Connection");
+      setToastMessage("Failed to fetch video details");
+    }
+  };
+
+  const handleKeyDownInputYoutubeURL = (
+    e: React.KeyboardEvent<HTMLInputElement>
+  ) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      if (videoUrl.trim()) {
+        handleUrlSubmit();
+      }
+    }
+    // if Shift+Enter, do nothing (allow newline)
+  };
+
+  const handleKeyDownScriptContent = (
+    e: React.KeyboardEvent<HTMLTextAreaElement>
+  ) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      if (scriptContent.trim()) {
+        handleSubmit();
+      }
+    }
+    // if Shift+Enter, do nothing (allow newline)
+  };
+
+  const extractTranscriptFromScript = async () => {
+    try {
+      const match = scriptContent.match(
+        /ytInitialPlayerResponse\s*=\s*(\{.*?\});/
+      )?.[1];
+      if (!match) throw new Error("ytInitialPlayerResponse not found");
+
+      const playerResponse = JSON.parse(match);
+      const transcriptUrl: string =
+        playerResponse?.captions?.playerCaptionsTracklistRenderer
+          ?.captionTracks?.[0]?.baseUrl;
+
+      if (!transcriptUrl) throw new Error("captionTracks baseUrl not found");
+
+      const transcriptUrlInitial = "https://www.youtube.com";
+      const parsedTranscriptUrl = transcriptUrl.startsWith(transcriptUrlInitial)
+        ? transcriptUrl
+        : `${transcriptUrlInitial}${transcriptUrl}`;
+
+      const transcriptRes = await fetch(parsedTranscriptUrl);
+      console.log("transcriptRes is ", transcriptRes);
+
+      const transcriptXml = await transcriptRes.text();
+
+      console.log("transcriptXml is ", transcriptXml);
+
+      const parser = new DOMParser();
+      const xmlDoc = parser.parseFromString(transcriptXml, "text/xml");
+      const texts = xmlDoc.getElementsByTagName("text");
+
+      let transcript = "";
+      for (let i = 0; i < texts.length; i++) {
+        const text = texts[i].textContent;
+        if (text?.trim()) {
+          transcript += text.replace(/[^\x00-\x7F]/g, "") + " ";
+        }
+      }
+
+      console.log("transcript is ", transcript);
+
+      return transcript;
+    } catch (error) {
+      if (error instanceof Error) {
+        console.log("error.stack is ", error.stack);
+        console.log("error.message is ", error.message);
+      }
+      setToastMessage(
+        error instanceof Error ? error.message : "Failed to extract URL"
+      );
+      return null;
+    }
+  };
+
+  const handleSubmit = async () => {
+    try {
+      setIsSubmittingScript(true);
+
+      const transcript = await extractTranscriptFromScript();
+
+      if (!transcript) {
+        throw new Error("Transcript not Found.");
+      }
+
+      const response = await fetch("/api/video/start-process", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          videoId,
+          transcript,
+        }),
+      });
+
+      const data = await response.json();
+
+      console.log("data is ", data);
+
+      if (!response.ok) {
+        throw new Error(data.message || "Failed to Submit.");
+      }
+
+      mutate(fetchAllUserVideos);
+      setVideoUrl("");
+      setStep(1);
+    } catch (error) {
+      if (error instanceof Error) {
+        console.log("error.stack is ", error.stack);
+        console.log("error.message is ", error.message);
+      }
+      setToastMessage(
+        error instanceof Error ? error.message : "Failed to submit"
+      );
     } finally {
-      setIsProcessing(false);
+      setIsSubmittingScript(false);
     }
   };
-
-  const handleContinueWithNewVideo = async () => {
-    setIsProcessing(true);
-    setShowAlert(false);
-    await stopVideoProcessing();
-    processVideos();
-  };
-
-  const handleCancelNewVideo = () => {
-    setShowAlert(false);
-  };
-
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      // Check for Ctrl+K or Cmd+K
-      if ((e.ctrlKey || e.metaKey) && e.key === "k") {
-        e.preventDefault();
-        setShowGuide(true);
-      }
-    };
-
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
-  }, []);
-
-  const dismissGuide = useCallback(() => {
-    setShowGuide(false);
-    const params = new URLSearchParams(searchParams);
-    params.delete("action");
-    router.push(`${pathName}?${params}`);
-  }, [pathName, router, searchParams]);
-
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (formRef.current && !formRef.current.contains(event.target as Node)) {
-        dismissGuide();
-      }
-    };
-
-    if (showGuide) {
-      document.addEventListener("mousedown", handleClickOutside);
-    }
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [showGuide, dismissGuide]);
-
-  useEffect(() => {
-    if (!message) return;
-    toast(message);
-    setMessage(null);
-  }, [message]);
 
   return (
-    <div className="m-2 w-full">
-      <AlertDialog open={showAlert} onOpenChange={setShowAlert}>
-        <AlertDialogContent>
-          <AlertDialogHeader>
-            <AlertDialogTitle className="flex items-center">
-              <AlertCircle className="h-5 w-5 text-yellow-500 mr-2" />
-              Pending Video Processing
-            </AlertDialogTitle>
-            <AlertDialogDescription>
-              You have video processing already in progress. Due to API
-              restrictions, starting a new video processing will stop the
-              processing of all other videos. Do you want to continue with the
-              new video blog generation?
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel
-              onClick={handleCancelNewVideo}
-              className="w-full"
-            >
-              Cancel
-            </AlertDialogCancel>
-            <AlertDialogAction
-              onClick={handleContinueWithNewVideo}
-              className="w-full"
-            >
-              Continue with new Video
-            </AlertDialogAction>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
-      {showGuide && (
-        <div className="absolute inset-0 ">
-          <div className="relative w-full h-full  flex items-center justify-center backdrop-blur-sm">
-            <motion.div
-              className={`bg-muted/30 rounded-xl border w-full max-w-lg`}
-              initial={{ opacity: 0, y: 80 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{
-                duration: 0.4,
-                ease: "easeInOut",
-                type: "spring",
-                stiffness: 260,
-                damping: 20,
-              }}
-              ref={formRef}
-            >
-              <form onSubmit={handleSubmit}>
-                <div className="flex items-center border-b px-4 py-3 gap-2">
-                  <SearchIcon className="w-5 h-5 text-muted-foreground mr-2" />
-                  <input
-                    type="text"
-                    placeholder="Paste Your Youtube Video URL..."
-                    value={url}
-                    onChange={(e) => {
-                      setUrl(e.target.value);
-                    }}
-                    disabled={isProcessing}
-                    className="flex-1 bg-transparent border-0 focus:outline-none focus:ring-0 text-base placeholder:text-muted-foreground"
-                  />
-                  <kbd className="hidden md:inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-xs font-medium opacity-100">
-                    <span className="text-xs">⌘</span>K
-                  </kbd>
-                </div>
-
-                <div className="border-t px-4 py-3 flex justify-between items-center">
-                  <div className="flex items-center space-x-2 text-sm text-muted-foreground">
-                    <SparklesIcon className="w-4 h-4" />
-                    <span>Uses Youtube API</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Button
-                      size="sm"
-                      disabled={!url || isProcessing}
-                      type="submit"
-                      className={cn("relative overflow-hidden")}
-                    >
-                      {isProcessing ? (
-                        <div className="flex items-center">
-                          <FaSpinner className="mr-2 h-4 w-4 animate-spin" />
-                          Processing...
-                        </div>
-                      ) : (
-                        "Generate Viral Tweets"
-                      )}
-                    </Button>
-                  </div>
-                </div>
-              </form>
-            </motion.div>
-          </div>
+    <div className="min-h-[calc(100vh-(4rem))] w-full flex items-center justify-center ">
+      <div className="max-w-3xl w-full  flex flex-col gap-6  mx-auto border rounded m-2 px-3 py-2 bg-muted/10">
+        <div>
+          <h2>Extract YouTube Video Transcript</h2>
+          <p className="text-muted-foreground">
+            Follow the steps below to generate blogs
+          </p>
         </div>
-      )}
+        <div>
+          {step === 1 && (
+            <div className="space-y-2">
+              <h3 className="text-lg">Step 1: Enter YouTube Video URL</h3>
 
-      <div
-        className={`rounded-xl border transition-all duration-600   ${
-          showGuide ? "opacity-0" : "opacity-100"
-        }`}
-      >
-        <form onSubmit={handleSubmit}>
-          <div className="flex items-center border-b px-4 py-3 gap-2">
-            <SearchIcon className="w-5 h-5 text-muted-foreground mr-2" />
-            <input
-              type="text"
-              placeholder="Paste Your Youtube Video URL..."
-              value={url}
-              onChange={(e) => {
-                setUrl(e.target.value);
-              }}
-              disabled={isProcessing}
-              className="flex-1 bg-transparent border-0 focus:outline-none focus:ring-0 text-base placeholder:text-muted-foreground"
-            />
-            <kbd className="hidden md:inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-xs font-medium opacity-100">
-              <span className="text-xs">⌘</span>K
-            </kbd>
-          </div>
+              <div className="flex gap-1">
+                <Input
+                  placeholder="https://www.youtube.com/watch?v=..."
+                  value={videoUrl}
+                  className="rounded rounded-r-none"
+                  onChange={(e) => setVideoUrl(e.target.value)}
+                  onKeyDown={handleKeyDownInputYoutubeURL}
+                />
+                <Button
+                  variant={"outline"}
+                  className="rounded rounded-l-none "
+                  disabled={isSubmittingUrl || !videoUrl.trim()}
+                  onClick={handleUrlSubmit}
+                >
+                  {isSubmittingUrl ? (
+                    <div className="flex gap-2 items-center">
+                      <Loader2 className="h-4 w-4 animate-spin" /> Wait ...
+                    </div>
+                  ) : (
+                    "Next"
+                  )}
+                </Button>
+              </div>
+            </div>
+          )}
 
-          <div className="border-t px-4 py-3 flex justify-between items-center">
-            <div className="flex items-center space-x-2 text-sm text-muted-foreground">
-              <SparklesIcon className="w-4 h-4" />
-              <span>Uses Youtube API</span>
+          {step === 2 && (
+            <div className="space-y-2">
+              <h3 className="text-lg ">Step 2: Get Transcript JSON File</h3>
+
+              {videoDetails && (
+                <VideoPreview videoDetails={videoDetails} videoId={videoId} />
+              )}
+              <div className="flex flex-col gap-2 p-4 ">
+                Due to YouTube&apos;s restrictions, you need to manually
+                download the transcript JSON file. Follow these steps:
+                <ol className="list-decimal list-inside mt-2 space-y-2">
+                  <li>
+                    <Link
+                      href={`https://www.youtube.com/watch?v=${videoId}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-purple-500 hover:underline"
+                    >
+                      Open the video in YouTube
+                    </Link>{" "}
+                    & Enable Captions
+                  </li>
+                  <li>
+                    Right-click on the page and select{" "}
+                    <span className="text-purple-500">Inspect</span>
+                  </li>
+                  <li>
+                    Navigate to{" "}
+                    <span className="text-purple-500">Elements</span> Tab
+                  </li>
+                  <li>
+                    Click on any HTML Element and then press <kbd>Ctrl</kbd> +{" "}
+                    <kbd>F</kbd> and search for{" "}
+                    <span className="text-purple-500">
+                      ytInitialPlayerResponse
+                    </span>
+                  </li>
+                  <li>
+                    Copy the script tag containing ytInitialPlayerResponse and
+                    paste it below
+                  </li>
+                </ol>
+                <Textarea
+                  placeholder="Paste the full <script>...</script> content that contains ytInitialPlayerResponse"
+                  rows={6}
+                  value={scriptContent}
+                  onChange={(e) => setScriptContent(e.target.value)}
+                  onKeyDown={handleKeyDownScriptContent}
+                  className="resize-none rounded"
+                />
+                <Button
+                  variant="outline"
+                  className="w-full rounded"
+                  onClick={handleSubmit}
+                  disabled={isSubmittingScript || !scriptContent.trim()}
+                >
+                  {isSubmittingScript ? (
+                    <div className="flex gap-2 items-center">
+                      <Loader2 className="h-4 w-4 animate-spin" /> Wait ...
+                    </div>
+                  ) : (
+                    "Generate Blogs"
+                  )}
+                </Button>
+              </div>
+
+              <div className="flex justify-between mt-4">
+                <Button variant="outline" onClick={() => setStep(1)}>
+                  Back
+                </Button>
+              </div>
             </div>
-            <div className="flex items-center gap-2">
-              <Button
-                size="sm"
-                disabled={!url || isProcessing}
-                type="submit"
-                className={cn("relative overflow-hidden")}
-              >
-                {isProcessing ? (
-                  <div className="flex items-center">
-                    <FaSpinner className="mr-2 h-4 w-4 animate-spin" />
-                    Processing...
-                  </div>
-                ) : (
-                  "Generate Viral Tweets"
-                )}
-              </Button>
-            </div>
-          </div>
-        </form>
+          )}
+        </div>
       </div>
     </div>
   );
 }
 
-export default CommandPaletteRepoForm;
+export default DashboardPage;

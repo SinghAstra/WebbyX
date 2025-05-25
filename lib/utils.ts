@@ -10,7 +10,7 @@ export function parseYoutubeUrl(url: string): {
   message?: string;
 } {
   const regex =
-    /^(https?:\/\/)?(www\.)?(youtube\.com\/watch\?v=|youtu\.be\/)[\w-]{11}(&\S*)?$/;
+    /^(https?:\/\/)?(www\.|m\.)?(youtube\.com\/watch\?v=|youtu\.be\/)[\w-]{11}(&\S*)?$/;
 
   if (!url.trim()) {
     return { isValid: false, message: "URL cannot be empty." };
@@ -20,7 +20,7 @@ export function parseYoutubeUrl(url: string): {
     return { isValid: false, message: "Invalid YouTube video URL." };
   }
 
-  return { isValid: true };
+  return { isValid: true, message: "Valid Youtube URL" };
 }
 
 export function convertISO8601ToTime(duration: string) {
@@ -41,3 +41,13 @@ export function convertISO8601ToTime(duration: string) {
     return `${minutes}:${seconds.toString().padStart(2, "0")}`;
   }
 }
+
+export const fetcher = async (url: string) => {
+  const response = await fetch(url);
+
+  if (!response.ok) {
+    throw new Error("Failed to Fetch Data Using Fetcher");
+  }
+
+  return response.json();
+};
