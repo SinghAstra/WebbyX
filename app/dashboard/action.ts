@@ -1,5 +1,6 @@
 "use server";
 
+import { VideoInfo } from "@/interfaces/video";
 import { authOptions } from "@/lib/auth-options";
 import { prisma } from "@/lib/prisma";
 import { createCleanJobsToken } from "@/lib/service-auth";
@@ -86,6 +87,94 @@ export async function stopVideoProcessing() {
     const data = await response.json();
 
     console.log("stopRepositoryProcessing data : ", data);
+  } catch (error) {
+    if (error instanceof Error) {
+      console.log("error.stack is ", error.stack);
+      console.log("error.message is ", error.message);
+    }
+  }
+}
+
+export async function getVideoInfo(videoId: string) {
+  try {
+    const YOUTUBE_API_KEY = process.env.YOUTUBE_API_KEY;
+
+    if (!YOUTUBE_API_KEY) {
+      throw new Error("YOUTUBE_API_KEY is required.");
+    }
+    const session = await getServerSession(authOptions);
+
+    if (!session) {
+      throw new Error("Unauthenticated User");
+    }
+
+    const ytVideoResponse = await fetch(
+      `https://www.googleapis.com/youtube/v3/videos?part=snippet,contentDetails&id=${videoId}&key=${YOUTUBE_API_KEY}`
+    );
+
+    const ytVideoData = await ytVideoResponse.json();
+    if (!ytVideoData.items || ytVideoData.items.length === 0) {
+      throw new Error("No items Found.");
+    }
+
+    const videoData = ytVideoData.items[0];
+    const {
+      title,
+      channelTitle: channelName,
+      thumbnails,
+      channelId,
+    } = videoData.snippet;
+    const videoThumbnail = thumbnails.maxres.url;
+    const duration = videoData.contentDetails.duration;
+
+    const ytChannelResponse = await fetch(
+      `https://www.googleapis.com/youtube/v3/channels?part=snippet,contentDetails&id=${channelId}&key=${YOUTUBE_API_KEY}`
+    );
+
+    const ytChannelData = await ytChannelResponse.json();
+    const channelData = ytChannelData.items[0];
+
+    const channelThumbnail = channelData.snippet.thumbnails.high.url;
+
+    const videoDetails = {
+      title,
+      channelName,
+      videoThumbnail,
+      channelThumbnail,
+      duration,
+    };
+
+    return videoDetails as VideoInfo;
+  } catch (error) {
+    if (error instanceof Error) {
+      console.log("error.stack is ", error.stack);
+      console.log("error.message is ", error.message);
+    }
+  }
+}
+
+export async function wakeUpServer() {
+  try {
+    const EXPRESS_API_URL = process.env.EXPRESS_API_URL;
+    const AWAKE_API_URL = process.env.AWAKE_API_URL;
+    if (!EXPRESS_API_URL) {
+      throw new Error("EXPRESS_API_URL is not defined");
+    }
+    if (!AWAKE_API_URL) {
+      throw new Error("AWAKE_API_URL is not defined");
+    }
+
+    const response = await fetch(`${AWAKE_API_URL}/api/wake-up`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ apiURL: EXPRESS_API_URL }),
+    });
+
+    const data = await response.json();
+
+    console.log("data is ", data);
   } catch (error) {
     if (error instanceof Error) {
       console.log("error.stack is ", error.stack);
