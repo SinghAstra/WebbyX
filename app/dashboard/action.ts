@@ -1,3 +1,5 @@
+"use server";
+
 import { authOptions } from "@/lib/auth-options";
 import { prisma } from "@/lib/prisma";
 import { createCleanJobsToken } from "@/lib/service-auth";
@@ -26,22 +28,6 @@ export async function fetchVideos() {
       console.log("error.message is ", error.message);
     }
     return { message: "Failed to Fetch Videos", videos: [] };
-  }
-}
-
-export async function activateBackendServer() {
-  try {
-    if (!EXPRESS_API_URL) {
-      throw new Error("EXPRESS_API_URL is required.");
-    }
-    const response = await fetch(EXPRESS_API_URL);
-    const data = await response.json();
-    console.log("activateBackendServer data:", data);
-  } catch (error) {
-    if (error instanceof Error) {
-      console.log("error.stack is ", error.stack);
-      console.log("error.message is ", error.message);
-    }
   }
 }
 

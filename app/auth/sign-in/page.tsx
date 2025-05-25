@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import RotatingBorderBadge from "@/components/ui/rotating-border-badge";
 import { Separator } from "@/components/ui/separator";
 import { siteConfig } from "@/config/site";
-import { Code2, FileSearch, Lightbulb, Loader } from "lucide-react";
+import { FileSearch, Loader } from "lucide-react";
 import { signIn } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
@@ -20,18 +20,6 @@ const features = [
     description:
       "Paste any YouTube video link and instantly get tweets generated from its transcript using web scraping.",
     icon: FileSearch,
-  },
-  {
-    title: "Multiple Tweet Styles",
-    description:
-      "Choose from Hook-Based, Insight Nuggets, Threads, Surprising Stats, or Quote + Opinion formats using a dropdown.",
-    icon: Lightbulb,
-  },
-  {
-    title: "Smart Prompt Enhancer",
-    description:
-      "Enhances the video transcript with context-aware formatting to craft engaging, viral-worthy tweets.",
-    icon: Code2,
   },
 ];
 

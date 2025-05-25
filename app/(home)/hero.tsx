@@ -50,8 +50,8 @@ const HeroSection = ({ isAuthenticated }: HeroSectionProps) => {
             </h1>
 
             <p className="mb-4 text-lg tracking-tight text-muted-foreground md:text-xl text-balance">
-              Paste a YouTube link and select your tweet style <br />
-              Hook, Thread, Insight, Stat, or Quote. We’ll do the rest.
+              Paste a YouTube Video link and <br />
+              we will generate viral tweets for you.
             </p>
             <div className="flex items-center justify-center gap-4 z-50">
               <BackgroundShine className="rounded-md">

@@ -68,29 +68,35 @@ model Video {
   processingState  VideoProcessingState @default(PENDING)
   transcript       String[]
   createdAt        DateTime             @default(now())
-  tweets           Tweet[]
+  tweetThread      TweetThread?
   user             User                 @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId])
 }
 
+model TweetThread {
+  id          String       @id @default(cuid())
+  videoId   String   @unique
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+
+  // Relations
+  video       Video        @relation(fields: [videoId], references: [id])
+  tweets      Tweet[]      
+}
+
+
 model Tweet {
   id          String @id @default(cuid())
-  videoId     String
-  type        TweetType
+  threadId     String
   content     String
+  index       Int 
 
   createdAt   DateTime @default(now())
-  video Video @relation(fields: [videoId], references: [id])
+  thread      TweetThread  @relation(fields: [threadId], references: [id])
 }
 
-enum TweetType {
-  HOOK
-  INSIGHT
-  THREAD
-  FACTS
-  QUOTE
-}
+
 
 enum VideoProcessingState {
   PENDING
