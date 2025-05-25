@@ -38,41 +38,39 @@ const SidebarVideoCard = ({ video }: VideoCardProps) => {
       return `/video/${video.id}`;
     }
 
-    if (
-      video.processingState === VideoProcessingState.PENDING ||
-      video.processingState === VideoProcessingState.PROCESSING
-    ) {
-      return `/logs/${video.id}`;
-    }
-    return null;
+    return `/logs/${video.id}`;
   };
 
   const href = getHref();
 
-  return href ? (
+  return (
     <Link href={href}>
       <VideoCard video={video} />
     </Link>
-  ) : (
-    <div
-      onClick={() => setMessage("Video Processing Failed! Please Try again")}
-    >
-      <VideoCard video={video} />
-    </div>
   );
 };
 
 const VideoCard = ({ video }: VideoCardProps) => {
+  const [isImageLoaded, setIsImageLoaded] = useState(false);
+
   return (
     <div className="p-2 flex gap-2 flex-col rounded-sm group hover:bg-muted/40 border transition-all duration-200 cursor-pointer">
-      <div className="relative w-full h-[200px] rounded-sm overflow-hidden">
-        <Image
-          src={video.videoThumbnail}
-          alt={video.title}
-          fill
-          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-          className="rounded-sm object-cover "
-        />
+      <div className="relative w-full rounded-sm overflow-hidden">
+        <div className="w-full relative  overflow-hidden">
+          {!isImageLoaded && (
+            <div className="absolute inset-0 animate-pulse bg-gradient-to-r from-muted/20 via-muted/40 to-muted/60" />
+          )}
+          <Image
+            src={video.videoThumbnail}
+            alt={video.title}
+            width={640}
+            height={360}
+            onLoad={() => setIsImageLoaded(true)}
+            className={`object-cover transition-opacity duration-700 ${
+              isImageLoaded ? "opacity-100" : "opacity-0"
+            }`}
+          />
+        </div>
         {video.processingState !== "COMPLETED" && (
           <>
             <div className="absolute inset-0 bg-muted/80"></div>
