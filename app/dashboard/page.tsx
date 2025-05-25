@@ -1,6 +1,6 @@
 "use client";
 
-import { useToastContext } from "@/components/provider/toast";
+import { useToastContext } from "@/components/providers/toast";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
