@@ -13,10 +13,6 @@
 /.next/
 /out/
 
-.env
-.env.production
-/blogs
-
 # production
 /build
 
