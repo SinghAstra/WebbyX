@@ -47,8 +47,8 @@ export function NewsletterForm() {
             onBlur={formik.handleBlur}
             className={`h-12 ${
               formik.touched.email && formik.errors.email
-                ? "border-red-500 focus:border-red-500"
-                : "border-gray-300 focus:border-blue-500"
+                ? "border-destructive focus:border-destructive focus:ring-destructive"
+                : "border-input focus:border-primary focus:ring-primary"
             }`}
           />
         </div>
@@ -56,7 +56,7 @@ export function NewsletterForm() {
           <Button
             type="submit"
             disabled={formik.isSubmitting}
-            className="h-12 px-8 bg-blue-600 hover:bg-blue-700 text-white font-medium transition-all duration-200"
+            className="h-12 px-8 bg-primary hover:bg-primary/90 text-primary-foreground font-medium transition-all duration-200"
           >
             {formik.isSubmitting ? (
               <motion.div
@@ -64,7 +64,7 @@ export function NewsletterForm() {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
               >
-                <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                <div className="w-4 h-4 border-2 border-primary-foreground border-t-transparent rounded-full animate-spin" />
                 <span>Submitting...</span>
               </motion.div>
             ) : (
@@ -80,7 +80,7 @@ export function NewsletterForm() {
       <AnimatePresence>
         {formik.touched.email && formik.errors.email && (
           <motion.p
-            className="text-red-500 text-sm"
+            className="text-destructive text-sm"
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
@@ -93,13 +93,13 @@ export function NewsletterForm() {
       <AnimatePresence>
         {isSubmitted && (
           <motion.div
-            className="flex items-center space-x-2 text-green-600 text-sm font-medium"
+            className="flex items-center space-x-2 text-green-600 dark:text-green-400 text-sm font-medium"
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.8 }}
             transition={{ type: "spring", stiffness: 500, damping: 30 }}
           >
-            <div className="flex items-center justify-center w-5 h-5 bg-green-500 rounded-full">
+            <div className="flex items-center justify-center w-5 h-5 bg-green-500 dark:bg-green-600 rounded-full">
               <Check className="h-3 w-3 text-white" />
             </div>
             <span>Thank you for subscribing!</span>
