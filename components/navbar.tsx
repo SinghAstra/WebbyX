@@ -26,7 +26,7 @@ export function Navbar() {
 
   return (
     <motion.nav
-      className="fixed top-0 left-0 right-0 z-40 bg-background/95 backdrop-blur-sm flex items-center justify-center  h-[100px]"
+      className="fixed top-0 left-0 right-0 z-40 backdrop-blur-sm flex items-center justify-center  h-[100px]"
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.6, ease: "easeOut" }}
@@ -52,7 +52,7 @@ export function Navbar() {
                 onMouseLeave={() => setActiveDropdown(null)}
               >
                 <motion.button
-                  className="flex items-center space-x-1 text-muted-foreground hover:text-foreground transition-colors duration-200"
+                  className="flex items-center space-x-1 text-foreground transition-colors duration-200"
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >
