@@ -34,9 +34,9 @@ const SecondSectionList = ({
         return (
           <motion.div
             key={index}
-            initial={{ opacity: 0, x: -10 }}
-            animate={inView ? { opacity: 1, x: 0 } : { opacity: 0, x: -10 }}
-            transition={{ duration: 0.6, delay: 0.2 * index }}
+            initial={{ opacity: 0, y: 20 }}
+            animate={inView ? { opacity: 1, y: 20 } : { opacity: 0, y: 20 }}
+            transition={{ duration: 0.6, delay: 0.3 * (index + 1) }}
             className="relative flex gap-2"
           >
             <div className="relative overflow-hidden rounded shadow-2xl w-[120px] h-[120px]">

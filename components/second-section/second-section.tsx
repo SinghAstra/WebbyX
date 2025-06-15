@@ -12,6 +12,7 @@ function SecondSection() {
   const descriptionRef = useRef(null);
   const imageRef = useRef(null);
   const secondSectionListRef = useRef(null);
+  const contactRef = useRef(null);
 
   const titleInView = useInView(titleRef, { once: true, margin: "-100px" });
   const descriptionInView = useInView(descriptionRef, {
@@ -19,6 +20,10 @@ function SecondSection() {
     margin: "-100px",
   });
   const secondSectionListInView = useInView(descriptionRef, {
+    once: true,
+    margin: "-100px",
+  });
+  const contactRefInView = useInView(contactRef, {
     once: true,
     margin: "-100px",
   });
@@ -30,16 +35,17 @@ function SecondSection() {
         <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center">
           {/* Left Content */}
           <div className="space-y-8">
+            <motion.p className="text-blue-600 dark:text-blue-400 font-medium text-sm lg:text-base">
+              Lorem ipsum dolor sit amet
+            </motion.p>
             <div className="space-y-6">
               <motion.h1
                 ref={titleRef}
-                initial={{ opacity: 0, y: 20, x: -20 }}
+                initial={{ opacity: 0, y: 20 }}
                 animate={
-                  titleInView
-                    ? { opacity: 1, y: 0, x: 0 }
-                    : { opacity: 0, y: 20, x: -50 }
+                  titleInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }
                 }
-                transition={{ duration: 0.4, delay: 0.1 }}
+                transition={{ duration: 0.4 }}
                 className="text-4xl lg:text-6xl font-bold text-foreground leading-tight"
               >
                 LOREM IPSUM
@@ -55,7 +61,7 @@ function SecondSection() {
                     ? { opacity: 1, y: 0 }
                     : { opacity: 0, y: 20 }
                 }
-                transition={{ duration: 0.5, delay: 0.2 }}
+                transition={{ duration: 0.4, delay: 0.1 }}
                 className="text-lg text-muted-foreground leading-relaxed"
               >
                 Lorem ipsum dolor sit amet consectetur. Amet sodales risus
@@ -68,7 +74,14 @@ function SecondSection() {
               inView={secondSectionListInView}
               secondSectionListRef={secondSectionListRef}
             />
-            <div className="flex gap-2">
+            <motion.div
+              ref={contactRef}
+              initial={{ opacity: 0, y: 20 }}
+              animate={
+                contactRefInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }
+              }
+              className="flex gap-2"
+            >
               <Button className="w-[179px] h-[38px] flex items-center space-x-2 group">
                 Lorem Ipsum
                 <ArrowRight className="h-4 w-4 group-hover:translate-x-2 transition duration-200" />
@@ -80,7 +93,7 @@ function SecondSection() {
                 <Phone className="h-4 w-4 group-hover:-translate-x-2 transition duration-200" />
                 123456789
               </Button>
-            </div>
+            </motion.div>
           </div>
 
           {/* Right Content - Image */}
