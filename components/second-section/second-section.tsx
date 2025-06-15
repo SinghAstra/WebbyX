@@ -1,0 +1,110 @@
+"use client";
+
+import { motion, useInView } from "framer-motion";
+import Image from "next/image";
+import { useRef } from "react";
+import SecondSectionList from "./second-section-list";
+
+function SecondSection() {
+  const titleRef = useRef(null);
+  const descriptionRef = useRef(null);
+  const imageRef = useRef(null);
+  const secondSectionListRef = useRef(null);
+
+  const titleInView = useInView(titleRef, { once: true, margin: "-100px" });
+  const descriptionInView = useInView(descriptionRef, {
+    once: true,
+    margin: "-100px",
+  });
+  const secondSectionListInView = useInView(descriptionRef, {
+    once: true,
+    margin: "-100px",
+  });
+
+  const imageInView = useInView(imageRef, { once: true, margin: "-100px" });
+  return (
+    <div className="min-h-screen bg-background">
+      <motion.div className="container mx-auto px-4 py-8 lg:py-16">
+        <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center">
+          {/* Left Content */}
+          <div className="space-y-8">
+            <div className="space-y-6">
+              <motion.h1
+                ref={titleRef}
+                initial={{ opacity: 0, y: 20, x: -20 }}
+                animate={
+                  titleInView
+                    ? { opacity: 1, y: 0, x: 0 }
+                    : { opacity: 0, y: 20, x: -50 }
+                }
+                transition={{ duration: 0.4, delay: 0.1 }}
+                className="text-4xl lg:text-6xl font-bold text-foreground leading-tight"
+              >
+                LOREM IPSUM
+                <br />
+                <span className="text-primary">DOLOR SIT AMET</span>
+              </motion.h1>
+
+              <motion.p
+                ref={descriptionRef}
+                initial={{ opacity: 0, y: 20 }}
+                animate={
+                  descriptionInView
+                    ? { opacity: 1, y: 0 }
+                    : { opacity: 0, y: 20 }
+                }
+                transition={{ duration: 0.5, delay: 0.2 }}
+                className="text-lg text-muted-foreground leading-relaxed"
+              >
+                Lorem ipsum dolor sit amet consectetur. Amet sodales risus
+                facilisis donec eu. Mi porttitor et aliquam ante tristique eget
+                integer in. Nam vitae nisi quis at leo aliquam. Hendrerit tellus
+                at mauris consectetur.
+              </motion.p>
+            </div>
+            <SecondSectionList
+              inView={secondSectionListInView}
+              ref={secondSectionListRef}
+            />
+          </div>
+
+          {/* Right Content - Image */}
+          <motion.div
+            ref={imageRef}
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={
+              imageInView
+                ? { opacity: 1, scale: 1 }
+                : { opacity: 0, scale: 0.8 }
+            }
+            transition={{ duration: 0.6, delay: 0.3 }}
+            className="relative"
+          >
+            <motion.div
+              whileHover={{ scale: 1.02 }}
+              transition={{ duration: 0.3 }}
+              className="relative overflow-hidden rounded-2xl shadow-2xl"
+            >
+              <Image
+                src="/second-section.png"
+                alt="Colorful motorcycles showcase"
+                width={600}
+                height={400}
+                className="w-full h-auto object-cover"
+                priority
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
+            </motion.div>
+          </motion.div>
+        </div>
+
+        {/* Contact Form Section */}
+        {/* <motion.div variants={itemVariants} className="mt-16 lg:mt-24">
+          <ContactForm />
+        </motion.div> */}
+      </motion.div>
+    </div>
+  );
+}
+
+export default SecondSection;

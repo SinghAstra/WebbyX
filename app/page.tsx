@@ -1,7 +1,8 @@
 "use client";
 
-import { HeroSection } from "@/components/hero-section";
-import { Navbar } from "@/components/navbar";
+import { HeroSection } from "@/components/hero/hero-section";
+import { Navbar } from "@/components/nav/navbar";
+import SecondSection from "@/components/second-section/second-section";
 
 export default function Home() {
   return (
@@ -9,6 +10,7 @@ export default function Home() {
       <Navbar />
       <main>
         <HeroSection />
+        <SecondSection />
       </main>
     </div>
   );
