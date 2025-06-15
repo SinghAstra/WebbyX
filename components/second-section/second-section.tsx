@@ -1,8 +1,10 @@
 "use client";
 
 import { motion, useInView } from "framer-motion";
+import { ArrowRight, Phone } from "lucide-react";
 import Image from "next/image";
 import { useRef } from "react";
+import { Button } from "../ui/button";
 import SecondSectionList from "./second-section-list";
 
 function SecondSection() {
@@ -64,8 +66,21 @@ function SecondSection() {
             </div>
             <SecondSectionList
               inView={secondSectionListInView}
-              ref={secondSectionListRef}
+              secondSectionListRef={secondSectionListRef}
             />
+            <div className="flex gap-2">
+              <Button className="w-[179px] h-[38px] flex items-center space-x-2 group">
+                Lorem Ipsum
+                <ArrowRight className="h-4 w-4 group-hover:translate-x-2 transition duration-200" />
+              </Button>
+              <Button
+                variant={"ghost"}
+                className="w-[179px] h-[38px] flex items-center space-x-2 group"
+              >
+                <Phone className="h-4 w-4 group-hover:-translate-x-2 transition duration-200" />
+                123456789
+              </Button>
+            </div>
           </div>
 
           {/* Right Content - Image */}
@@ -78,30 +93,25 @@ function SecondSection() {
                 : { opacity: 0, scale: 0.8 }
             }
             transition={{ duration: 0.6, delay: 0.3 }}
-            className="relative"
+            className="relative h-full w-full"
           >
             <motion.div
               whileHover={{ scale: 1.02 }}
               transition={{ duration: 0.3 }}
-              className="relative overflow-hidden rounded-2xl shadow-2xl"
+              className="relative overflow-hidden rounded-2xl shadow-2xl  h-full"
             >
               <Image
                 src="/second-section.png"
                 alt="Colorful motorcycles showcase"
                 width={600}
                 height={400}
-                className="w-full h-auto object-cover"
+                className=" h-full object-cover"
                 priority
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
             </motion.div>
           </motion.div>
         </div>
-
-        {/* Contact Form Section */}
-        {/* <motion.div variants={itemVariants} className="mt-16 lg:mt-24">
-          <ContactForm />
-        </motion.div> */}
       </motion.div>
     </div>
   );
