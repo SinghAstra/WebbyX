@@ -2,6 +2,11 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
+import {
+  containerVariants,
+  imageVariants,
+  itemVariants,
+} from "../second-section/second-section";
 
 const bulletPoints = [
   {
@@ -15,41 +20,6 @@ const bulletPoints = [
   },
 ];
 
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.2,
-      duration: 0.6,
-    },
-  },
-};
-
-const itemVariants = {
-  hidden: { opacity: 0, y: 30 },
-  visible: {
-    opacity: 1,
-    y: 0,
-  },
-  transition: {
-    duration: 0.6,
-    ease: "easeOut",
-  },
-};
-
-const imageVariants = {
-  hidden: { opacity: 0, x: 50 },
-  visible: {
-    opacity: 1,
-    x: 0,
-  },
-  transition: {
-    duration: 0.8,
-    ease: "easeOut",
-  },
-};
-
 function ThirdSection() {
   return (
     <section className="relative min-h-screen bg-background">
@@ -59,7 +29,7 @@ function ThirdSection() {
           <motion.div
             variants={containerVariants}
             initial="hidden"
-            animate="visible"
+            whileInView="visible"
             className="space-y-8"
           >
             <motion.div variants={itemVariants} className="space-y-6">
@@ -122,7 +92,7 @@ function ThirdSection() {
           <motion.div
             variants={imageVariants}
             initial="hidden"
-            animate="visible"
+            whileInView="visible"
             className="relative"
           >
             <motion.div

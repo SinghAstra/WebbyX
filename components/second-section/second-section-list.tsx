@@ -1,16 +1,35 @@
+"use client";
+
 import { motion } from "framer-motion";
 import Image from "next/image";
-import React, { MutableRefObject } from "react";
 
-interface SecondSectionListProps {
-  secondSectionListRef: MutableRefObject<null>;
-  inView: boolean;
-}
+const listContainerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      duration: 0.4,
+      staggerChildren: 0.4,
+      delayChildren: 0.1,
+    },
+  },
+};
 
-const SecondSectionList = ({
-  secondSectionListRef,
-  inView,
-}: SecondSectionListProps) => {
+const listItemVariants = {
+  hidden: {
+    opacity: 0,
+    y: 30,
+  },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.6,
+    },
+  },
+};
+
+const SecondSectionList = () => {
   const secondSectionList = [
     {
       image: "/second-section-list-item-1.png",
@@ -29,23 +48,26 @@ const SecondSectionList = ({
   ];
 
   return (
-    <div ref={secondSectionListRef} className="flex flex-col gap-2">
+    <motion.div
+      className="flex flex-col gap-2"
+      variants={listContainerVariants}
+      initial="hidden"
+      whileInView="visible"
+    >
       {secondSectionList.map((secondSectionListItem, index) => {
         return (
           <motion.div
             key={index}
-            initial={{ opacity: 0, y: 20 }}
-            animate={inView ? { opacity: 1, y: 20 } : { opacity: 0, y: 20 }}
-            transition={{ duration: 0.6, delay: 0.3 * (index + 1) }}
             className="relative flex gap-2"
+            variants={listItemVariants}
           >
             <div className="relative overflow-hidden rounded shadow-2xl w-[120px] h-[120px]">
               <Image
-                src={secondSectionListItem.image}
+                src={secondSectionListItem.image || "/placeholder.svg"}
                 alt={secondSectionListItem.content}
                 width={200}
                 height={200}
-                className="w-full h-auto object-cover "
+                className="w-full h-auto object-cover"
                 priority
               />
             </div>
@@ -55,7 +77,7 @@ const SecondSectionList = ({
           </motion.div>
         );
       })}
-    </div>
+    </motion.div>
   );
 };
 
