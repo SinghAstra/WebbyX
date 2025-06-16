@@ -7,16 +7,20 @@ import {
   imageVariants,
   itemVariants,
 } from "../second-section/second-section";
+import {
+  listContainerVariants,
+  listItemVariants,
+} from "../second-section/second-section-list";
 
 const bulletPoints = [
   {
-    text: "Lorem ipsum dolor sit amet consectetur. Volutpat hac morbi egestas. Lorem ipsum dolor sit amet consectetur. Eros egestas et arcu eu non viverra. Risus quam mattis senectus vitae interdum odio ornare gravida vestibulum. Donec turpis nulla felis mauris eu donec. Orci sit ut tortor.",
+    text: "Lorem ipsum dolor sit amet consectetur. Volutpat hac morbi egestas. Lorem ipsum dolor sit amet consectetur.",
   },
   {
-    text: "Lorem ipsum dolor sit amet consectetur. Volutpat hac morbi egestas. Lorem ipsum dolor sit amet consectetur. Eros egestas et arcu eu non viverra. Risus quam mattis senectus vitae interdum odio ornare gravida vestibulum. Donec turpis nulla felis mauris eu donec. Orci sit ut tortor.",
+    text: "Lorem ipsum dolor sit amet consectetur. Volutpat hac mornulla felis mauris eu donec. Orci sit ut tortor.",
   },
   {
-    text: "Lorem ipsum dolor sit amet consectetur. Volutpat hac morbi egestas. Lorem ipsum dolor sit amet consectetur. Eros egestas et arcu eu non viverra. Risus quam mattis senectus vitae interdum odio ornare gravida vestibulum. Donec turpis nulla felis mauris eu donec. Orci sit ut tortor.",
+    text: "Lorem ipsum dolor siconsectetur. Eros egestas et arcu eu non viverra. Risus quam mattis senectus vitae interdum odio ornare gravida vestibulum. Donec turpis nulla felis mauris eu donec. Orci sit ut tortor.",
   },
 ];
 
@@ -59,14 +63,12 @@ function ThirdSection() {
             </motion.div>
 
             {/* Bullet Points */}
-            <motion.div variants={itemVariants} className="space-y-6">
+            <motion.div variants={listContainerVariants} className="space-y-6">
               {bulletPoints.map((point, index) => (
                 <motion.div
                   key={index}
-                  variants={itemVariants}
-                  className="flex gap-4 group"
-                  whileHover={{ x: 4 }}
-                  transition={{ duration: 0.2 }}
+                  variants={listItemVariants}
+                  className="flex gap-4 group hover:bg-muted px-3 py-2 rounded duration-200"
                 >
                   <div className="flex-shrink-0 mt-1">
                     <div className="w-[36px] h-[36px] group-hover:scale-110 transition-transform duration-200 relative">
@@ -80,9 +82,15 @@ function ThirdSection() {
                       />
                     </div>
                   </div>
-                  <p className="text-muted-foreground text-sm lg:text-base leading-relaxed">
-                    {point.text}
-                  </p>
+                  <div className="flex flex-col gap-1">
+                    <p className="text-foreground text-sm lg:text-base leading-relaxed">
+                      Lorem ipsum dolor sit amet consectetur. Mauris ullamcorper
+                      etiam
+                    </p>
+                    <p className="text-muted-foreground text-sm lg:text-base leading-relaxed">
+                      {point.text}
+                    </p>
+                  </div>
                 </motion.div>
               ))}
             </motion.div>

@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
 
-const listContainerVariants = {
+export const listContainerVariants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
@@ -15,7 +15,7 @@ const listContainerVariants = {
   },
 };
 
-const listItemVariants = {
+export const listItemVariants = {
   hidden: {
     opacity: 0,
     y: 30,
