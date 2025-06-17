@@ -27,9 +27,6 @@ export function NewsletterForm() {
       await new Promise((resolve) => setTimeout(resolve, 1000));
       setIsSubmitted(true);
       formik.resetForm();
-
-      // Reset success message after 3 seconds
-      setTimeout(() => setIsSubmitted(false), 3000);
     },
   });
 
