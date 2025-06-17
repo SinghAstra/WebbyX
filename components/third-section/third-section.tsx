@@ -1,16 +1,14 @@
 "use client";
 
-import { motion } from "framer-motion";
-import Image from "next/image";
 import {
   containerVariants,
   imageVariants,
   itemVariants,
-} from "../second-section/second-section";
-import {
   listContainerVariants,
   listItemVariants,
-} from "../second-section/second-section-list";
+} from "@/lib/variant";
+import { motion } from "framer-motion";
+import Image from "next/image";
 
 const bulletPoints = [
   {

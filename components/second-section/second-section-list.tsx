@@ -1,33 +1,8 @@
 "use client";
 
+import { listContainerVariants, listItemVariants } from "@/lib/variant";
 import { motion } from "framer-motion";
 import Image from "next/image";
-
-export const listContainerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      duration: 0.4,
-      staggerChildren: 0.4,
-      delayChildren: 0.1,
-    },
-  },
-};
-
-export const listItemVariants = {
-  hidden: {
-    opacity: 0,
-    y: 30,
-  },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.6,
-    },
-  },
-};
 
 const SecondSectionList = () => {
   const secondSectionList = [

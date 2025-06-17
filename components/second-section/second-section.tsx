@@ -1,53 +1,11 @@
 "use client";
 
+import { containerVariants, imageVariants, itemVariants } from "@/lib/variant";
 import { motion } from "framer-motion";
 import { ArrowRight, Phone } from "lucide-react";
 import Image from "next/image";
 import { Button } from "../ui/button";
 import SecondSectionList from "./second-section-list";
-
-// Container variant for orchestrating child animations
-export const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      duration: 0.6,
-      staggerChildren: 0.15, // Consistent delay between items
-      delayChildren: 0.1, // Initial delay before first item
-    },
-  },
-};
-
-// Item variant for consistent item animations
-export const itemVariants = {
-  hidden: {
-    opacity: 0,
-    y: 30,
-  },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.6,
-    },
-  },
-};
-
-// Image variant with different animation style
-export const imageVariants = {
-  hidden: {
-    opacity: 0,
-    scale: 0.9,
-  },
-  visible: {
-    opacity: 1,
-    scale: 1,
-    transition: {
-      duration: 0.8,
-    },
-  },
-};
 
 function SecondSection() {
   return (

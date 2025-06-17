@@ -3,49 +3,9 @@
 import { motion } from "framer-motion";
 import { Check } from "lucide-react";
 
+import { containerVariants, imageVariants, itemVariants } from "@/lib/variant";
 import Image from "next/image";
 import { NewsletterForm } from "./newsletter-form";
-
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      duration: 0.6,
-      staggerChildren: 0.2,
-      delayChildren: 0.2,
-    },
-  },
-};
-
-const itemVariants = {
-  hidden: {
-    opacity: 0,
-    y: 20,
-    x: -20,
-  },
-  visible: {
-    transition: {
-      duration: 0.6,
-    },
-    opacity: 1,
-    y: 0,
-    x: 0,
-  },
-};
-
-const imageVariants = {
-  hidden: {
-    opacity: 0,
-  },
-  visible: {
-    opacity: 1,
-    transition: {
-      duration: 0.8,
-      delay: 0.4,
-    },
-  },
-};
 
 export function HeroSection() {
   return (

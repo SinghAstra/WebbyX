@@ -1,10 +1,6 @@
+import { containerVariants, imageVariants, itemVariants } from "@/lib/variant";
 import { motion } from "framer-motion";
 import Image from "next/image";
-import {
-  containerVariants,
-  imageVariants,
-  itemVariants,
-} from "../second-section/second-section";
 
 function FourthSection() {
   return (
