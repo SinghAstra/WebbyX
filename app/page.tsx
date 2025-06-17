@@ -4,6 +4,7 @@ import Blogs from "@/components/blogs/blogs";
 import FourthSection from "@/components/fourth-section/fourth-section";
 import { HeroSection } from "@/components/hero/hero-section";
 import { Navbar } from "@/components/nav/navbar";
+import RequestQuote from "@/components/request-quote";
 import SecondSection from "@/components/second-section/second-section";
 import SixthSection from "@/components/sixth-section/sixth-section";
 import ThirdSection from "@/components/third-section/third-section";
@@ -21,6 +22,7 @@ export default function Home() {
         <BrandsShowcase />
         <Blogs />
         <SixthSection />
+        <RequestQuote />
       </main>
     </div>
   );

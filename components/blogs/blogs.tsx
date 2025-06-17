@@ -1,6 +1,10 @@
 "use client";
 
-import { containerVariants, itemVariants } from "@/lib/variant";
+import {
+  containerVariants,
+  itemVariants,
+  listContainerVariants,
+} from "@/lib/variant";
 import { motion } from "framer-motion";
 import { BlogCard } from "./blog-card";
 
@@ -70,7 +74,10 @@ function Blogs() {
           </motion.p>
 
           {/* Blog Grid */}
-          <motion.div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-10 max-w-4xl mx-auto">
+          <motion.div
+            className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-10 max-w-4xl mx-auto pb-8 md:pb-12 lg:pb-16"
+            variants={listContainerVariants}
+          >
             {blogPosts.map((post, index) => (
               <BlogCard
                 key={post.id}
