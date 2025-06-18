@@ -2,6 +2,7 @@
 
 import Blogs from "@/components/blogs/blogs";
 import DownloadApp from "@/components/download-app";
+import FeaturesSection from "@/components/features-section";
 import FourthSection from "@/components/fourth-section/fourth-section";
 import { HeroSection } from "@/components/hero/hero-section";
 import { Navbar } from "@/components/nav/navbar";
@@ -27,6 +28,7 @@ export default function Home() {
         <RequestQuote />
         <DownloadApp />
         <SectionEight />
+        <FeaturesSection />
       </main>
     </div>
   );
