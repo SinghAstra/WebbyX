@@ -1,7 +1,6 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
@@ -58,7 +57,6 @@ function RequestQuote() {
     role: "",
     operator: "",
     message: "",
-    agreeToTerms: false,
   };
 
   const formik = useFormik({
@@ -84,7 +82,7 @@ function RequestQuote() {
     <motion.div
       variants={containerVariants}
       initial="hidden"
-      animate="visible"
+      whileInView="visible"
       className="w-full max-w-3xl mx-auto py-8 md:py-12 lg:py-16 flex flex-col gap-8 md:gap-16 lg:gap-24"
     >
       <motion.h1
@@ -96,14 +94,10 @@ function RequestQuote() {
 
       <div className="space-y-6">
         {isSubmitted && (
-          <motion.div
-            variants={itemVariants}
-            initial="hidden"
-            animate="visible"
-          >
+          <motion.div variants={itemVariants}>
             <div className="border-green-200 bg-green-50 dark:border-green-800 dark:bg-green-950 flex gap-2 items-center rounded px-3 py-2">
               <Check className="h-4 w-4 text-green-600 dark:text-green-400" />
-              <p className="text-green-800 dark:text-green-200  ">
+              <p className="text-green-800 dark:text-green-200">
                 Thank you! Your quote request has been submitted successfully.
                 We&apos;ll get back to you soon.
               </p>
@@ -132,7 +126,7 @@ function RequestQuote() {
                 value={formik.values.name}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
-                className={`bg-background border-input ${
+                className={`bg-background border-input rounded-none ${
                   formik.errors.name && formik.touched.name
                     ? "border-destructive"
                     : ""
@@ -159,7 +153,7 @@ function RequestQuote() {
                 value={formik.values.email}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
-                className={`bg-background border-input ${
+                className={`bg-background border-input rounded-none ${
                   formik.errors.email && formik.touched.email
                     ? "border-destructive"
                     : ""
@@ -192,7 +186,7 @@ function RequestQuote() {
                 value={formik.values.phoneNumber}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
-                className={`bg-background border-input ${
+                className={`bg-background border-input rounded-none ${
                   formik.errors.phoneNumber && formik.touched.phoneNumber
                     ? "border-destructive"
                     : ""
@@ -218,7 +212,7 @@ function RequestQuote() {
                 }
               >
                 <SelectTrigger
-                  className={`bg-background border-input ${
+                  className={`bg-background border-input rounded-none ${
                     formik.errors.timeFrame && formik.touched.timeFrame
                       ? "border-destructive"
                       : ""
@@ -226,9 +220,13 @@ function RequestQuote() {
                 >
                   <SelectValue placeholder="Select time frame" />
                 </SelectTrigger>
-                <SelectContent>
+                <SelectContent className="rounded-none">
                   {timeFrameOptions.map((option) => (
-                    <SelectItem key={option.value} value={option.value}>
+                    <SelectItem
+                      className="rounded-none"
+                      key={option.value}
+                      value={option.value}
+                    >
                       {option.label}
                     </SelectItem>
                   ))}
@@ -258,7 +256,7 @@ function RequestQuote() {
                 onValueChange={(value) => formik.setFieldValue("role", value)}
               >
                 <SelectTrigger
-                  className={`bg-background border-input ${
+                  className={`bg-background border-input rounded-none ${
                     formik.errors.role && formik.touched.role
                       ? "border-destructive"
                       : ""
@@ -266,9 +264,13 @@ function RequestQuote() {
                 >
                   <SelectValue placeholder="Select your role" />
                 </SelectTrigger>
-                <SelectContent>
+                <SelectContent className="rounded-none">
                   {roleOptions.map((option) => (
-                    <SelectItem key={option.value} value={option.value}>
+                    <SelectItem
+                      className="rounded-none"
+                      key={option.value}
+                      value={option.value}
+                    >
                       {option.label}
                     </SelectItem>
                   ))}
@@ -294,7 +296,7 @@ function RequestQuote() {
                 }
               >
                 <SelectTrigger
-                  className={`bg-background border-input ${
+                  className={`bg-background border-input rounded-none ${
                     formik.errors.operator && formik.touched.operator
                       ? "border-destructive"
                       : ""
@@ -302,7 +304,7 @@ function RequestQuote() {
                 >
                   <SelectValue placeholder="Select operator type" />
                 </SelectTrigger>
-                <SelectContent>
+                <SelectContent className="rounded-none">
                   {operatorOptions.map((option) => (
                     <SelectItem key={option.value} value={option.value}>
                       {option.label}
@@ -333,7 +335,7 @@ function RequestQuote() {
               value={formik.values.message}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              className={`bg-background border-input resize-none ${
+              className={`bg-background border-input resize-none rounded-none ${
                 formik.errors.message && formik.touched.message
                   ? "border-destructive"
                   : ""
@@ -346,44 +348,28 @@ function RequestQuote() {
           </motion.div>
 
           {/* Terms and Conditions */}
-          <motion.div variants={itemVariants} className="space-y-4">
-            <div className="flex items-start space-x-3">
-              <Checkbox
-                id="agreeToTerms"
-                checked={formik.values.agreeToTerms}
-                onCheckedChange={(checked) =>
-                  formik.setFieldValue("agreeToTerms", checked)
-                }
-                className="mt-1"
-              />
-              <div className="space-y-1">
-                <Label
-                  htmlFor="agreeToTerms"
-                  className="text-sm text-muted-foreground leading-relaxed cursor-pointer"
-                >
-                  By submitting this form you agree to our{" "}
-                  <a href="#" className="text-primary hover:underline">
-                    Terms of Service
-                  </a>{" "}
-                  and{" "}
-                  <a href="#" className="text-primary hover:underline">
-                    Privacy Policy
-                  </a>
-                </Label>
-                <FormErrorMessage
-                  error={formik.errors.agreeToTerms}
-                  touched={formik.touched.agreeToTerms}
-                />
-              </div>
-            </div>
+          <motion.div variants={itemVariants}>
+            <p className="text-sm text-muted-foreground leading-relaxed text-center">
+              By submitting this form you agree to our{" "}
+              <a href="#" className="text-primary hover:underline">
+                Terms of Service
+              </a>{" "}
+              and{" "}
+              <a href="#" className="text-primary hover:underline">
+                Privacy Policy
+              </a>
+            </p>
           </motion.div>
 
           {/* Submit Button */}
-          <motion.div variants={itemVariants}>
+          <motion.div
+            variants={itemVariants}
+            className="flex items-center justify-center"
+          >
             <Button
               type="submit"
               disabled={formik.isSubmitting}
-              className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-medium py-3 transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]"
+              className="w-fit bg-primary rounded-none hover:bg-primary/90 text-primary-foreground font-medium py-3 transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]"
             >
               {formik.isSubmitting ? (
                 <>

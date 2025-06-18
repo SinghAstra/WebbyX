@@ -1,6 +1,7 @@
 "use client";
 
 import Blogs from "@/components/blogs/blogs";
+import DownloadApp from "@/components/download-app";
 import FourthSection from "@/components/fourth-section/fourth-section";
 import { HeroSection } from "@/components/hero/hero-section";
 import { Navbar } from "@/components/nav/navbar";
@@ -23,6 +24,7 @@ export default function Home() {
         <Blogs />
         <SixthSection />
         <RequestQuote />
+        <DownloadApp />
       </main>
     </div>
   );

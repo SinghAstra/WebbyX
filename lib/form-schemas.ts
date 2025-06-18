@@ -18,9 +18,6 @@ export const quoteFormSchema = Yup.object({
     .min(10, "Message must be at least 10 characters")
     .max(500, "Message must be less than 500 characters")
     .required("Message is required"),
-  agreeToTerms: Yup.boolean()
-    .oneOf([true], "You must agree to the terms and privacy policy")
-    .required("You must agree to the terms and privacy policy"),
 });
 
 export type QuoteFormValues = Yup.InferType<typeof quoteFormSchema>;
