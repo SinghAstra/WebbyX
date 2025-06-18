@@ -61,7 +61,7 @@ function DownloadApp() {
       </div>
       {/* Right Content - Phone Image */}
       <motion.div
-        className="absolute inset-0 left-[50vw] top-[30vh] hidden lg:flex justify-end  group"
+        className="absolute inset-0 left-[60vw] top-[40vh] hidden lg:flex justify-end  group"
         variants={imageVariants}
       >
         {/* Phone Container */}
