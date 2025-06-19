@@ -1,7 +1,6 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
 import {
   containerVariants,
   fadeInVariants,
@@ -9,7 +8,6 @@ import {
   itemVariants,
   listContainerVariants,
   listItemVariants,
-  scaleVariants,
 } from "@/lib/variant";
 import { motion } from "framer-motion";
 import { ArrowRight, Clock, Cloud, Network, ShoppingBag } from "lucide-react";

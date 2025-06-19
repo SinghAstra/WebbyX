@@ -1,6 +1,7 @@
 "use client";
 
 import Blogs from "@/components/blogs/blogs";
+import BusinessSection from "@/components/buisness-section";
 import DownloadApp from "@/components/download-app";
 import FeaturesSection from "@/components/features-section";
 import FourthSection from "@/components/fourth-section/fourth-section";
@@ -31,6 +32,7 @@ export default function Home() {
         <SectionEight />
         <FeaturesSection />
         <TestimonialSection />
+        <BusinessSection />
       </main>
     </div>
   );
