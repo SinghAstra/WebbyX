@@ -10,6 +10,7 @@ import RequestQuote from "@/components/request-quote";
 import SecondSection from "@/components/second-section/second-section";
 import SectionEight from "@/components/section-eight";
 import SixthSection from "@/components/sixth-section/sixth-section";
+import TestimonialSection from "@/components/testimonial-section";
 import ThirdSection from "@/components/third-section/third-section";
 import BrandsShowcase from "../components/brands-showcase";
 
@@ -29,6 +30,7 @@ export default function Home() {
         <DownloadApp />
         <SectionEight />
         <FeaturesSection />
+        <TestimonialSection />
       </main>
     </div>
   );
