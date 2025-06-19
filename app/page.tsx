@@ -10,6 +10,7 @@ import { Navbar } from "@/components/nav/navbar";
 import RequestQuote from "@/components/request-quote";
 import SecondSection from "@/components/second-section/second-section";
 import SectionEight from "@/components/section-eight";
+import ShowCase from "@/components/showcase";
 import SixthSection from "@/components/sixth-section/sixth-section";
 import TestimonialSection from "@/components/testimonial-section";
 import ThirdSection from "@/components/third-section/third-section";
@@ -33,6 +34,7 @@ export default function Home() {
         <FeaturesSection />
         <TestimonialSection />
         <BusinessSection />
+        <ShowCase />
       </main>
     </div>
   );
