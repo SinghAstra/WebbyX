@@ -79,7 +79,7 @@ export function Footer() {
             <motion.div
               key={column.title}
               variants={itemVariants}
-              className="space-y-4"
+              className="space-y-4 text-center md:text-left"
             >
               <h3 className="text-sm font-semibold text-foreground">
                 {column.title}

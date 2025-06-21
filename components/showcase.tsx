@@ -81,7 +81,7 @@ function ShowCase() {
             <motion.div variants={itemVariants}>
               <Button
                 size="lg"
-                className="group rounded bg-primary hover:bg-primary/90 text-primary-foreground px-6 py-3 text-base font-medium transition-all duration-300 hover:scale-105 hover:shadow-lg"
+                className="group rounded bg-button hover:bg-button text-primary-foreground px-6 py-3 text-base font-medium transition-all duration-300 hover:scale-105 hover:shadow-lg"
                 asChild
               >
                 <a href={"#"}>

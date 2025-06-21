@@ -47,7 +47,7 @@ function CTASection() {
         <motion.div variants={slideUpVariants} className="pt-4">
           <Button
             size="lg"
-            className="px-8 py-3 text-base shadow-sm font-medium bg-primary hover:shadow-2xl text-primary-foreground transition-all duration-200 group rounded"
+            className="px-8 py-3 text-base shadow-sm font-medium bg-button hover:shadow-2xl text-primary-foreground transition-all duration-200 group rounded"
           >
             Get Started
             <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform duration-200" />
