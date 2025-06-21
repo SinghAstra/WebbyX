@@ -1,6 +1,6 @@
 "use client";
 
-import { containerVariants, itemVariants } from "@/lib/variant";
+import { containerVariants, itemVariants } from "@/lib/variants";
 import { motion } from "framer-motion";
 import Link from "next/link";
 

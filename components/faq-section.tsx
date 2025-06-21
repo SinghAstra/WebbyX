@@ -6,7 +6,11 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { containerVariants, fadeInVariants, itemVariants } from "@/lib/variant";
+import {
+  containerVariants,
+  fadeInVariants,
+  itemVariants,
+} from "@/lib/variants";
 import { motion } from "framer-motion";
 
 interface FAQItem {

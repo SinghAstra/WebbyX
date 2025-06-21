@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import { Check } from "lucide-react";
 
-import { containerVariants, imageVariants, itemVariants } from "@/lib/variant";
+import { containerVariants, imageVariants, itemVariants } from "@/lib/variants";
 import Image from "next/image";
 import { NewsletterForm } from "./newsletter-form";
 
@@ -12,7 +12,7 @@ export function HeroSection() {
     <section className="min-h-screen flex items-center overflow-x-hidden">
       {/* Left Content */}
       <motion.div
-        className="space-y-4 max-w-xl mx-auto lg:mx-8"
+        className="space-y-4 max-w-lg mx-auto px-4 lg:mx-8 "
         variants={containerVariants}
         initial="hidden"
         whileInView="visible"
@@ -42,8 +42,8 @@ export function HeroSection() {
           className="flex items-center space-x-2 text-sm text-muted-foreground"
           variants={itemVariants}
         >
-          <div className="flex items-center justify-center w-5 h-5 bg-green-500 dark:bg-green-600 rounded-full">
-            <Check className="h-3 w-3 text-foreground" />
+          <div className="flex items-center justify-center w-5 h-5 bg-button rounded-full">
+            <Check className="h-3 w-3 text-primary-foreground" />
           </div>
           <span>No credit card required!</span>
         </motion.div>

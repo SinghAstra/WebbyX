@@ -8,7 +8,7 @@ import {
   itemVariants,
   listContainerVariants,
   listItemVariants,
-} from "@/lib/variant";
+} from "@/lib/variants";
 import { motion } from "framer-motion";
 import { ArrowRight, Clock, Cloud, Network, ShoppingBag } from "lucide-react";
 import Image from "next/image";

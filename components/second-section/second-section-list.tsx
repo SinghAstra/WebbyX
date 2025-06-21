@@ -1,6 +1,6 @@
 "use client";
 
-import { listContainerVariants, listItemVariants } from "@/lib/variant";
+import { listContainerVariants, listItemVariants } from "@/lib/variants";
 import { motion } from "framer-motion";
 import Image from "next/image";
 

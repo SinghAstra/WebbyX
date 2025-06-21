@@ -6,7 +6,7 @@ import {
   imageVariants,
   itemVariants,
   slideUpVariants,
-} from "@/lib/variant";
+} from "@/lib/variants";
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 

@@ -1,3 +1,8 @@
+export const hoverAndTapScaleVariant = {
+  hover: { scale: 1.05 },
+  tap: { scale: 0.95 },
+};
+
 export const containerVariants = {
   hidden: { opacity: 0 },
   visible: {

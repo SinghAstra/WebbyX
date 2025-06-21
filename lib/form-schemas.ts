@@ -20,4 +20,10 @@ export const quoteFormSchema = Yup.object({
     .required("Message is required"),
 });
 
+export const newsletterSchema = Yup.object({
+  email: Yup.string()
+    .email("Please enter a valid email address")
+    .required("Please enter a valid email address."),
+});
+
 export type QuoteFormValues = Yup.InferType<typeof quoteFormSchema>;

@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { quoteFormSchema, type QuoteFormValues } from "@/lib/form-schemas";
-import { containerVariants, itemVariants } from "@/lib/variant";
+import { containerVariants, itemVariants } from "@/lib/variants";
 import { useFormik } from "formik";
 import { motion } from "framer-motion";
 import { Check, Loader2 } from "lucide-react";

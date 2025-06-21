@@ -2,7 +2,7 @@
 
 import { Card } from "@/components/ui/card";
 import { slidesData } from "@/lib/slide-data";
-import { fadeInVariants } from "@/lib/variant";
+import { fadeInVariants } from "@/lib/variants";
 import { motion } from "framer-motion";
 import { useCallback, useEffect, useState } from "react";
 import { SlideContent } from "./slide-content";

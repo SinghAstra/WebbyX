@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { SlideData } from "@/lib/slide-data";
-import { containerVariants, imageVariants, itemVariants } from "@/lib/variant";
+import { containerVariants, imageVariants, itemVariants } from "@/lib/variants";
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import Image from "next/image";

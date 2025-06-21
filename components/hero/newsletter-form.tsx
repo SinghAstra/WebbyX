@@ -2,17 +2,12 @@
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { newsletterSchema } from "@/lib/form-schemas";
+import { hoverAndTapScaleVariant } from "@/lib/variants";
 import { useFormik } from "formik";
 import { motion } from "framer-motion";
 import { ArrowRight, Check } from "lucide-react";
 import { useState } from "react";
-import * as Yup from "yup";
-
-const newsletterSchema = Yup.object({
-  email: Yup.string()
-    .email("Please enter a valid email address")
-    .required("Please enter a valid email address."),
-});
 
 export function NewsletterForm() {
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -23,7 +18,6 @@ export function NewsletterForm() {
     },
     validationSchema: newsletterSchema,
     onSubmit: async () => {
-      // Simulate API call
       await new Promise((resolve) => setTimeout(resolve, 1000));
       setIsSubmitted(true);
       formik.resetForm();
@@ -44,17 +38,21 @@ export function NewsletterForm() {
           value={formik.values.email}
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
-          className={`h-[46px] w-[324px] rounded-r-none  ${
+          className={`rounded-none lg:rounded-l-sm  ${
             formik.touched.email && formik.errors.email
               ? "border-destructive focus:border-destructive focus:ring-destructive"
               : "border-input focus:border-primary focus:ring-primary"
           }`}
         />
-        <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+        <motion.div
+          variants={hoverAndTapScaleVariant}
+          whileHover="hover"
+          whileTap="tap"
+        >
           <Button
             type="submit"
             disabled={formik.isSubmitting}
-            className="h-[46px] w-[127px] px-8 bg-primary hover:bg-primary/90 rounded-l-none text-primary-foreground font-medium transition-all duration-200"
+            className=" px-8 bg-button hover:bg-button  rounded-none lg:rounded-r-sm w-full lg:w-fit text-primary-foreground font-medium transition-all duration-200"
           >
             {formik.isSubmitting ? (
               <motion.div

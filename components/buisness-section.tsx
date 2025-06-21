@@ -5,7 +5,7 @@ import {
   imageVariants,
   itemVariants,
   tabVariants,
-} from "@/lib/variant";
+} from "@/lib/variants";
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import Image from "next/image";

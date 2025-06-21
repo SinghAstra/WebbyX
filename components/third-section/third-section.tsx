@@ -6,7 +6,7 @@ import {
   itemVariants,
   listContainerVariants,
   listItemVariants,
-} from "@/lib/variant";
+} from "@/lib/variants";
 import { motion } from "framer-motion";
 import Image from "next/image";
 

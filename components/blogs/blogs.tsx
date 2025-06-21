@@ -4,7 +4,7 @@ import {
   containerVariants,
   itemVariants,
   listContainerVariants,
-} from "@/lib/variant";
+} from "@/lib/variants";
 import { motion } from "framer-motion";
 import { BlogCard } from "./blog-card";
 

@@ -1,6 +1,6 @@
 "use client";
 
-import { containerVariants, imageVariants, itemVariants } from "@/lib/variant";
+import { containerVariants, imageVariants, itemVariants } from "@/lib/variants";
 import { motion } from "framer-motion";
 import { Download, Star } from "lucide-react";
 import Image from "next/image";
