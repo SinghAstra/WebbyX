@@ -3,6 +3,7 @@
 import Blogs from "@/components/blogs/blogs";
 import BusinessSection from "@/components/buisness-section";
 import DownloadApp from "@/components/download-app";
+import FAQSection from "@/components/faq-section";
 import FeaturesSection from "@/components/features-section";
 import FourthSection from "@/components/fourth-section/fourth-section";
 import { HeroSection } from "@/components/hero/hero-section";
@@ -36,7 +37,8 @@ export default function Home() {
         <TestimonialSection />
         <BusinessSection />
         <ShowCase />
-        <Slideshow autoPlay={true} autoPlayInterval={600} className="w-full" />
+        <Slideshow autoPlay={true} autoPlayInterval={1200} className="w-full" />
+        <FAQSection />
       </main>
     </div>
   );

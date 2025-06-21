@@ -3,7 +3,7 @@
 import { Card } from "@/components/ui/card";
 import { slidesData } from "@/lib/slide-data";
 import { fadeInVariants } from "@/lib/variant";
-import { AnimatePresence, motion } from "framer-motion";
+import { motion } from "framer-motion";
 import { useCallback, useEffect, useState } from "react";
 import { SlideContent } from "./slide-content";
 import { SlideNavigation } from "./slide-navigation";
@@ -70,61 +70,41 @@ export function Slideshow({
   }, [nextSlide, previousSlide, isPlaying]);
 
   return (
-    <motion.div
-      variants={fadeInVariants}
-      initial="hidden"
-      animate="visible"
-      className={className}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-    >
-      <Card className="relative w-full min-h-[600px] lg:min-h-[700px] bg-background border-border overflow-hidden">
-        {/* Slides Container */}
-        <div className="relative w-full h-full">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={currentSlide}
-              initial={{ opacity: 0, x: 300 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -300 }}
-              transition={{
-                duration: 0.5,
-                ease: [0.25, 0.46, 0.45, 0.94],
-              }}
-              className="absolute inset-0"
-            >
-              <SlideContent slide={slidesData[currentSlide]} isActive={true} />
-            </motion.div>
-          </AnimatePresence>
-        </div>
+    <div className="min-h-screen flex items-center justify-center  p-8">
+      <motion.div
+        variants={fadeInVariants}
+        initial="hidden"
+        animate="visible"
+        className={`${className} `}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+      >
+        <Card className="relative w-full min-h-[600px] lg:min-h-[700px] bg-background border-border overflow-hidden">
+          {/* Slides Container */}
+          <motion.div
+            key={currentSlide}
+            initial={{ opacity: 0, x: 300 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -300 }}
+            transition={{
+              duration: 0.5,
+              ease: [0.25, 0.46, 0.45, 0.94],
+            }}
+            className="absolute inset-0"
+          >
+            <SlideContent slide={slidesData[currentSlide]} isActive={true} />
+          </motion.div>
 
-        {/* Navigation */}
-        <div className="absolute bottom-6 left-6 right-6">
-          <SlideNavigation
-            currentSlide={currentSlide}
-            totalSlides={slidesData.length}
-            onPrevious={previousSlide}
-            onNext={nextSlide}
-            onDotClick={goToSlide}
-          />
-        </div>
-
-        {/* Progress Bar */}
-        {isPlaying && (
-          <div className="absolute top-0 left-0 w-full h-1 bg-muted">
-            <motion.div
-              className="h-full bg-primary"
-              initial={{ width: "0%" }}
-              animate={{ width: "100%" }}
-              transition={{
-                duration: autoPlayInterval / 1000,
-                ease: "linear",
-                repeat: Number.POSITIVE_INFINITY,
-              }}
+          {/* Navigation */}
+          <div className="absolute bottom-6 left-6 right-6">
+            <SlideNavigation
+              currentSlide={currentSlide}
+              totalSlides={slidesData.length}
+              onDotClick={goToSlide}
             />
           </div>
-        )}
-      </Card>
-    </motion.div>
+        </Card>
+      </motion.div>
+    </div>
   );
 }
