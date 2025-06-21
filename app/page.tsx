@@ -12,6 +12,7 @@ import SecondSection from "@/components/second-section/second-section";
 import SectionEight from "@/components/section-eight";
 import ShowCase from "@/components/showcase";
 import SixthSection from "@/components/sixth-section/sixth-section";
+import { Slideshow } from "@/components/slideshow/slideshow";
 import TestimonialSection from "@/components/testimonial-section";
 import ThirdSection from "@/components/third-section/third-section";
 import BrandsShowcase from "../components/brands-showcase";
@@ -35,6 +36,7 @@ export default function Home() {
         <TestimonialSection />
         <BusinessSection />
         <ShowCase />
+        <Slideshow autoPlay={true} autoPlayInterval={600} className="w-full" />
       </main>
     </div>
   );
