@@ -1,4 +1,5 @@
 import { ThemeProvider } from "@/components/theme/theme-provider";
+import { siteConfig } from "@/config/site";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import type React from "react";
@@ -13,16 +14,26 @@ export const metadata: Metadata = {
   keywords: ["landing page", "modern", "responsive", "Next.js"],
   authors: [{ name: "WebbyX" }],
   openGraph: {
-    title: "WebbyX - Modern Landing Page",
-    description:
-      "A modern, responsive landing page built with Next.js, TypeScript, and Tailwind CSS",
     type: "website",
+    locale: "en_US",
+    url: siteConfig.url,
+    title: siteConfig.name,
+    description: siteConfig.description,
+    siteName: siteConfig.name,
+    images: [
+      {
+        url: "/hero.png",
+        width: 1200,
+        height: 630,
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "WebbyX - Modern Landing Page",
-    description:
-      "A modern, responsive landing page built with Next.js, TypeScript, and Tailwind CSS",
+    title: siteConfig.name,
+    description: siteConfig.description,
+    images: ["/hero.png"],
+    creator: "@singhastra",
   },
 };
 
