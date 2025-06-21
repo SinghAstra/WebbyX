@@ -35,7 +35,7 @@ export function Navbar() {
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <motion.div
-            className="flex-shrink-0 cursor-pointer"
+            className="flex-shrink-0 cursor-pointer bg-muted"
             whileHover={{ scale: 1.05 }}
             transition={{ duration: 0.8 }}
           >
