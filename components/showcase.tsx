@@ -47,13 +47,13 @@ const imageVariants = {
 
 function ShowCase() {
   return (
-    <section className="relative bg-background py-12 md:py-20 lg:py-24">
+    <section className="relative bg-muted py-12 md:py-20 lg:py-24">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
-          className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 xl:gap-16"
+          className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 xl:gap-16 relative "
         >
           {/* Content Section */}
           <motion.div
@@ -137,18 +137,16 @@ function ShowCase() {
           {/* Image Section */}
           <motion.div
             variants={imageVariants}
-            className="relative order-first lg:order-last"
+            className=" hidden lg:block absolute -top-[30%] left-[50%] max-w-[40%] aspect-[4/3] w-full overflow-hidden rounded-lg shadow-2xl"
           >
-            <div className="relative aspect-[4/3] w-full overflow-hidden rounded-lg shadow-2xl">
-              <Image
-                src="/showroom.png"
-                alt="Professional business meeting with two men discussing next to a motorcycle in a modern office setting"
-                fill
-                className="object-cover transition-transform duration-700 hover:scale-105"
-                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 600px"
-                priority
-              />
-            </div>
+            <Image
+              src="/showroom.png"
+              alt="Professional business meeting with two men discussing next to a motorcycle in a modern office setting"
+              fill
+              className="object-cover transition-transform duration-700 hover:scale-105"
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 600px"
+              priority
+            />
           </motion.div>
         </motion.div>
       </div>

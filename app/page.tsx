@@ -24,7 +24,7 @@ export default function Home() {
   return (
     <div className="overflow-x-hidden">
       <Navbar />
-      <main>
+      <div className="space-y-10">
         <HeroSection />
         <SecondSection />
         <ThirdSection />
@@ -43,7 +43,7 @@ export default function Home() {
         <FAQSection />
         <CTASection />
         <Footer />
-      </main>
+      </div>
     </div>
   );
 }

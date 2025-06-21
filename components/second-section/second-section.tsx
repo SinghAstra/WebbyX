@@ -20,7 +20,7 @@ function SecondSection() {
             whileInView="visible"
           >
             <motion.p
-              className="text-blue-600 dark:text-blue-400 font-medium text-sm lg:text-base"
+              className="text-link font-medium text-sm lg:text-base"
               variants={itemVariants}
             >
               Lorem ipsum dolor sit amet
@@ -52,13 +52,13 @@ function SecondSection() {
             </motion.div>
 
             <motion.div className="flex gap-2" variants={itemVariants}>
-              <Button className="w-[179px] h-[38px] flex items-center space-x-2 group">
+              <Button className="px-3 py-1 flex items-center space-x-2 group bg-button hover:bg-button">
                 Lorem Ipsum
                 <ArrowRight className="h-4 w-4 group-hover:translate-x-2 transition duration-200" />
               </Button>
               <Button
                 variant={"ghost"}
-                className="w-[179px] h-[38px] flex items-center space-x-2 group"
+                className="px-3 py-1 flex items-center space-x-2 group text-button"
               >
                 <Phone className="h-4 w-4 group-hover:-translate-x-2 transition duration-200" />
                 123456789

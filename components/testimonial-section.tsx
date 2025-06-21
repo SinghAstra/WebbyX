@@ -3,7 +3,6 @@
 import { Button } from "@/components/ui/button";
 import {
   containerVariants,
-  fadeInVariants,
   imageVariants,
   itemVariants,
   listContainerVariants,
@@ -74,7 +73,7 @@ const testimonials = [
 
 function TestimonialSection() {
   return (
-    <section className="relative min-h-screen bg-gradient-to-br from-primary via-primary/90 to-primary/80 overflow-hidden">
+    <section className="relative min-h-screen bg-button overflow-hidden">
       <div className="relative z-10 container mx-auto px-4 py-12 lg:py-20">
         <motion.div
           variants={containerVariants}
@@ -169,22 +168,6 @@ function TestimonialSection() {
           </motion.div>
         </motion.div>
       </div>
-
-      {/* Navigation Arrows */}
-      <motion.div
-        variants={fadeInVariants}
-        initial="hidden"
-        animate="visible"
-        className="absolute bottom-8 left-8 z-20"
-      >
-        {/* <Image
-          src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-jrn1YuxARzjKCh6YoimI5ewFpjA8kV.png"
-          alt="Navigation arrows"
-          width={80}
-          height={40}
-          className="object-contain" */}
-        {/* /> */}
-      </motion.div>
     </section>
   );
 }

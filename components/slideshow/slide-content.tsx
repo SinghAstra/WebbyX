@@ -24,7 +24,7 @@ export function SlideContent({ slide, isActive }: SlideContentProps) {
     >
       <motion.div
         variants={imageVariants}
-        className=" w-full border relative aspect-[4/3]  rounded-lg overflow-hidden shadow-2xl max-w-[60vw]"
+        className=" w-full h-full border relative aspect-[4/3]  rounded-lg overflow-hidden shadow-2xl  lg:max-w-[60vw]"
       >
         <Image
           src={slide.image || "/placeholder.svg"}
@@ -37,7 +37,7 @@ export function SlideContent({ slide, isActive }: SlideContentProps) {
       </motion.div>
       <motion.div
         variants={itemVariants}
-        className="absolute top-[30%] right-[10vw] max-w-[40vw] w-full space-y-6 text-center lg:text-left"
+        className="absolute top-[30%] lg:right-[10vw] sm:inset-x-0 lg:left-auto mx-2 lg:mx-0 lg:max-w-[40vw] w-full space-y-6 text-center lg:text-left"
       >
         <motion.div variants={itemVariants}>
           <Card className="bg-card/50 backdrop-blur-sm border-border/50">

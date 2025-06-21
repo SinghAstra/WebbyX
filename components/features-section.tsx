@@ -21,7 +21,7 @@ function FeaturesSection() {
       variants={containerVariants}
       initial="hidden"
       whileInView="visible"
-      className="w-full max-w-7xl mx-auto  min-h-screen"
+      className="w-full max-w-7xl mx-auto  min-h-screen px-4 md:px-8 lg:px-12"
     >
       <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 ">
         {/* Image Section */}
@@ -45,15 +45,15 @@ function FeaturesSection() {
         {/* Content Section */}
         <motion.div
           variants={itemVariants}
-          className="space-y-6 lg:space-y-8 order-1 lg:order-2 mt-[15vh] "
+          className="space-y-6 lg:space-y-8 order-1 lg:order-2 mt-[15vh] bg-muted px-3 py-2 rounded-sm "
         >
           <motion.div variants={itemVariants} className="space-y-4">
-            <span className=" font-semibold text-primary text-xl  ">
+            <span className=" font-semibold text-link text-xl  ">
               Lorem Ipsum
             </span>
 
             <h1 className="text-3xl sm:text-4xl   font-bold leading-tight text-balance">
-              <span className="text-primary">LOREM </span>{" "}
+              <span className="text-link">LOREM </span>{" "}
               <span className="text-foreground">
                 IPSUM DOLOR SIT AMET CONSECTETUR. ENIM DONEC.
               </span>{" "}
@@ -85,12 +85,11 @@ function FeaturesSection() {
           </motion.div>
 
           <motion.div variants={itemVariants} className="pt-4">
-            <Button className="group relative overflow-hidden bg-primary hover:bg-primary/90 text-primary-foreground text-base font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105">
+            <Button className="group relative overflow-hidden bg-button hover:bg-button text-primary-foreground text-base font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform">
               <span className="relative z-10 flex items-center space-x-2">
                 <span>Lorem Ipsum</span>
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-200" />
               </span>
-              <div className="absolute inset-0 bg-gradient-to-r from-primary to-primary/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
             </Button>
           </motion.div>
         </motion.div>

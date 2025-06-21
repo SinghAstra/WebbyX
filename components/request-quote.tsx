@@ -15,7 +15,7 @@ import { quoteFormSchema, type QuoteFormValues } from "@/lib/form-schemas";
 import { containerVariants, itemVariants } from "@/lib/variants";
 import { useFormik } from "formik";
 import { motion } from "framer-motion";
-import { Check, Loader2 } from "lucide-react";
+import { ArrowRight, Check, Loader2 } from "lucide-react";
 import { useState } from "react";
 import { FormErrorMessage } from "./form-error-message";
 
@@ -83,11 +83,11 @@ function RequestQuote() {
       variants={containerVariants}
       initial="hidden"
       whileInView="visible"
-      className="w-full max-w-3xl mx-auto py-8 md:py-12 lg:py-16 flex flex-col gap-8 md:gap-16 lg:gap-24"
+      className="w-full max-w-3xl mx-auto py-8 md:py-12 lg:py-16 flex flex-col gap-8 md:gap-16 lg:gap-24 px-4 md:px-8 lg:px-12"
     >
       <motion.h1
         variants={itemVariants}
-        className="text-4xl font-medium text-foreground tracking-wide uppercase text-center"
+        className="text-4xl font-bold text-foreground tracking-tight uppercase text-center"
       >
         Request a quote
       </motion.h1>
@@ -369,7 +369,7 @@ function RequestQuote() {
             <Button
               type="submit"
               disabled={formik.isSubmitting}
-              className="w-fit bg-primary rounded-none hover:bg-primary/90 text-primary-foreground font-medium py-3 transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]"
+              className="w-fit bg-button rounded-none hover:bg-button  text-primary-foreground font-medium py-3 transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] group"
             >
               {formik.isSubmitting ? (
                 <>
@@ -377,7 +377,10 @@ function RequestQuote() {
                   Submitting Quote...
                 </>
               ) : (
-                "Submit Quote"
+                <>
+                  Submit Quote
+                  <ArrowRight className="h-4 w-4 group-hover:translate-x-2 transition duration-200" />
+                </>
               )}
             </Button>
           </motion.div>

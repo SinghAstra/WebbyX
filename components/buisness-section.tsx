@@ -61,7 +61,7 @@ function BusinessSection() {
             <motion.div variants={itemVariants} className="pt-2">
               <Link
                 href="#"
-                className="inline-flex items-center gap-2 text-primary hover:text-primary/80 font-medium text-sm sm:text-base md:text-lg transition-colors duration-200 group  rounded-sm"
+                className="inline-flex items-center gap-2 text-link font-medium text-sm sm:text-base md:text-lg transition-colors duration-200 group  rounded-sm"
               >
                 <span>Check tools</span>
                 <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-1 transition-transform duration-200" />

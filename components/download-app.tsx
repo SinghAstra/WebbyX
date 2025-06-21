@@ -8,7 +8,7 @@ import Image from "next/image";
 function DownloadApp() {
   return (
     <motion.div
-      className=" relative min-h-screen overflow-hidden flex items-center"
+      className=" relative min-h-[60vh]  overflow-hidden flex items-center bg-muted py-4"
       variants={containerVariants}
       initial="hidden"
       whileInView="visible"
@@ -61,7 +61,7 @@ function DownloadApp() {
       </div>
       {/* Right Content - Phone Image */}
       <motion.div
-        className="absolute inset-0 left-[50vw] top-[20vh] hidden lg:flex justify-end  group"
+        className="absolute inset-0 left-[50vw] top-[0vh] hidden lg:flex justify-end  group"
         variants={imageVariants}
       >
         {/* Phone Container */}

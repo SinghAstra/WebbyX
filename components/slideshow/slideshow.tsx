@@ -70,7 +70,7 @@ export function Slideshow({
   }, [nextSlide, previousSlide, isPlaying]);
 
   return (
-    <div className="min-h-screen flex items-center justify-center  p-8">
+    <div className="min-h-screen items-center justify-center  p-8 flex">
       <motion.div
         variants={fadeInVariants}
         initial="hidden"

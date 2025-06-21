@@ -37,7 +37,7 @@ function ThirdSection() {
             <motion.div variants={itemVariants} className="space-y-6">
               <motion.p
                 variants={itemVariants}
-                className="text-blue-600 dark:text-blue-400 font-medium text-sm lg:text-base"
+                className="text-link font-medium text-sm lg:text-base"
               >
                 Lorem ipsum dolor sit amet
               </motion.p>
